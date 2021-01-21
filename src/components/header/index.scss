@@ -1,0 +1,58 @@
+.header {
+    height: 70px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+
+    .headAll {
+        position: relative;
+        height: 100%;
+        max-width: 1450px;
+        margin: 0 auto;
+
+        .logo {
+            width: 120px;
+            height: 100%;
+            position: absolute;
+            top: 50%; 
+            left: 10px;
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            transform: translateY(-50%);
+
+            img {
+                display: block;
+                height: 100%;
+                width: 100%;
+                margin: 0;
+            }
+        }
+
+        .tac-head {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            transform: translateY(-50%);
+
+            ul, li {
+                margin: 0;
+                padding: 0;
+            }
+
+            li {
+                display: inline-block;
+                list-style-type: none;
+                margin-right: 15px;
+
+                a {
+                    font-size: 20px;
+                    color: rgb(14, 14, 26);
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    line-height: 1;
+                }
+            }
+        }
+    }
+}
