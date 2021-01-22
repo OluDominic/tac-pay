@@ -5,7 +5,9 @@ import Home from '../../components/Home';
 const Homepage =()=> {
 
     return (
-        <Home />
+        <section className="homw">
+            <Home />
+        </section>
     )
 }
 

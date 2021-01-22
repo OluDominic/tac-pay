@@ -1,6 +1,6 @@
 import React from 'react';
+import './index.scss'
 import Avatar from './../../avatar.png'
-import { Link } from 'react-router-dom'
 
 const Profile =(props)=> {
 
@@ -16,28 +16,9 @@ const Profile =(props)=> {
                     </div>
                 </li>
                 <li>
-                    <h2>Welcome</h2>
-                    <span className="">
-                        name
+                    <span className="displayName">
+                        Welcome Dominic
                     </span>
-                </li>
-            </ul>
-
-            <ul>
-                <li>
-                    <Link>
-                        Check balace
-                    </Link>
-                </li>
-                <li>
-                    <Link>
-                        Payment History
-                    </Link>
-                </li>
-                <li>
-                    <Link>
-                        Check attendance
-                    </Link>
                 </li>
             </ul>
             

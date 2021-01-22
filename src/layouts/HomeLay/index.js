@@ -7,7 +7,7 @@ import Home from '../../components/Home';
 const HomeLay =()=> {
     return (
         <div>
-            <Header />
+            <Header className="tacHome"/>
                 <Home />
             <Footer />
         </div>

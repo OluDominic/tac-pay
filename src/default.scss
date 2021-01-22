@@ -38,14 +38,18 @@ h1 {
     border-bottom: #d3d3d3;
     text-transform: uppercase;
     line-height: 30px;
-    font-size: 27px;
+    font-size: 25px;
     width: 100%;
+}
+
+.formWrap {
+    margin: 30px auto 0;
 }
 
 h2 {
     display: block;
     color: black;
-    padding: 0;
+    padding: 10px;
     margin: 0 auto 20px;
     font-weight: 400;
     text-align: left;
@@ -54,6 +58,10 @@ h2 {
     line-height: 23px;
     font-size: 20px;
     width: 100%;
+}
+
+.tacHome {
+    height: 100%;
 }
 
 h3 {
@@ -84,9 +92,8 @@ a, a:hover {
 .main {
     width: 100%;
     max-width: 1450px;
-    width: 100%;
-    height: calc(100% - 6.5rem);
-    padding: 0 20px;
+    height: calc(100% - 7.0rem);
+    padding: 0 10px;
     margin: 0 auto;
 }
 
@@ -98,7 +105,7 @@ a, a:hover {
     padding: 3rem 0 6rem 25.0rem;
     border-bottom: 1px solid #d3d3d3;
 
-    controlLay {
+    .controlLay {
         position: absolute;
         top: 0;
         left: 0;
@@ -114,9 +121,9 @@ a, a:hover {
 }
 
 .tacAdminLay {
-    height: calc(100% - 6.5rem - 4.5rem - 2.3rem)
+    height: calc(100% - 7.0rem - 4.5rem - 2.3rem)
 }
 
 .tacStuLay {
-    height: calc(100% - 6.5rem - 4.5rem);
+    height: calc(100% - 7.0rem - 4.5rem);
 }

@@ -9,7 +9,7 @@ const Header = props=> {
         <header className="header">
             <div className="headAll">
                 <div className="logo">
-                    <Link>
+                    <Link to="/">
                         <img src={Img} alt="img"/>
                     </Link>
                 </div>
@@ -18,14 +18,20 @@ const Header = props=> {
 
                     <ul>
                         <li>
-                            <Link>
-                                Login
+                            <Link to="/">
+                                Home
                             </Link>
                         </li>
 
                         <li>
-                            <Link>
+                            <Link to="/register">
                                 Register
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to="/">
+                                LogOut
                             </Link>
                         </li>
                     </ul>

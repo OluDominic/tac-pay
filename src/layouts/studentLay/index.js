@@ -14,13 +14,23 @@ const StudentLay =(props)=> {
                     <View>
                         <ul>
                             <li>
-                                <Link to="/profile">
-                                    Home
+                                <Link to="/deposit">
+                                    Deposit
                                 </Link>
                             </li>
                             <li>
-                                <Link>
-                                    Logout
+                                <Link to="/balance">
+                                    Check Balance
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/payment">
+                                    Payment History
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/attendance">
+                                    Check Attendance
                                 </Link>
                             </li>
                         </ul>

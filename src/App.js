@@ -14,6 +14,8 @@ import CheckAttendance from './pages/checkAttendance';
 import './default.scss';
 import MyTranaction from './pages/myTran';
 import Homepage from './pages/Homepage';
+import Dashboard from './components/dashboard';
+import DepositPage from './pages/deposit';
 
 const App=(props)=> {
   return (
@@ -27,7 +29,7 @@ const App=(props)=> {
         )}/>
         <Route path="/profile" render={()=> (
           <StudentLay>
-            <Profile />
+            <Dashboard />
           </StudentLay>
         )}/>
         <Route path="/admin" render={()=> (
@@ -46,19 +48,24 @@ const App=(props)=> {
           </MainLay>
         )} />
         <Route path="/payment" render={()=> (
-          <MainLay>
+          <StudentLay>
             <Payment />
-          </MainLay>
+          </StudentLay>
         )} />
         <Route path="/balance" render={()=> (
-          <MainLay>
+          <StudentLay>
             <CheckBal />
-          </MainLay>
+          </StudentLay>
+        )} />
+        <Route path="/deposit" render={()=> (
+          <StudentLay>
+            <DepositPage />
+          </StudentLay>
         )} />
         <Route path="/attendance" render={()=> (
-          <MainLay>
+          <StudentLay>
             <CheckAttendance />
-          </MainLay>
+          </StudentLay>
         )} />
         <Route path="/transaction" render={()=> (
           <MainLay>
