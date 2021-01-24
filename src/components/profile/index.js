@@ -6,7 +6,7 @@ const Profile =(props)=> {
 
     return (
         <div className="profile">
-            <div>
+            <div className="align">
                 <h1>Student Portal</h1>
             </div>
             <ul>

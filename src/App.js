@@ -3,7 +3,6 @@ import MainLay from './layouts/mainLay';
 import AdminLay from './layouts/adminLay';
 import StudentLay from './layouts/adminLay'
 import HomeLay from './layouts/HomeLay';
-import Profile from './pages/profile'
 import { Switch, Route } from 'react-router-dom'
 import Admin from './pages/admin';
 import LoginForm from './pages/LoginForm';
@@ -16,8 +15,10 @@ import MyTranaction from './pages/myTran';
 import Homepage from './pages/Homepage';
 import Dashboard from './components/dashboard';
 import DepositPage from './pages/deposit';
+import TransactionHistory from './pages/transactionHistory';
 
 const App=(props)=> {
+
   return (
     <div className="App">
       
@@ -37,15 +38,25 @@ const App=(props)=> {
             <Admin />
           </AdminLay>
         )}/>
+        <Route path="/transaction" render={()=> (
+          <AdminLay>
+            <TransactionHistory />
+          </AdminLay>
+        )}/>
+        <Route path="/transaction/:transactionType" render={()=> (
+          <AdminLay>
+            <TransactionHistory />
+          </AdminLay>
+        )}/>
         <Route path="/login" render={()=> (
           <MainLay>
             <LoginForm />
           </MainLay>
         )}  />
         <Route path="/register" render={()=> (
-          <MainLay>
+          <AdminLay>
             <RegistrationForm />
-          </MainLay>
+          </AdminLay>
         )} />
         <Route path="/payment" render={()=> (
           <StudentLay>

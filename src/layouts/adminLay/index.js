@@ -5,6 +5,7 @@ import View from './../../components/View'
 import { Link } from 'react-router-dom'
 
 const StudentLay =(props)=> {
+    
 
     return (
         <div className="tacAdminLay">
