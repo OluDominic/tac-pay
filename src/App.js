@@ -19,6 +19,7 @@ import TransactionHistory from './pages/transactionHistory';
 
 const App=(props)=> {
 
+
   return (
     <div className="App">
       
@@ -48,11 +49,17 @@ const App=(props)=> {
             <TransactionHistory />
           </AdminLay>
         )}/>
-        <Route path="/login" render={()=> (
+      {
+        /**
+         * 
+         *   <Route path="/login" render={()=> (
           <MainLay>
             <LoginForm />
           </MainLay>
         )}  />
+        
+         */
+      }
         <Route path="/register" render={()=> (
           <AdminLay>
             <RegistrationForm />

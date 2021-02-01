@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import FormInput from './../forms/FornInput/formInput'
 import Button from './../forms/Buttons'
 import './index.scss'
@@ -6,24 +7,51 @@ import FormWrapper from '../formWrapper';
 
 const Registration =(props)=> {
 
-    const [firstName, setFirstName] = useState(" ")
-    const [surName, setSurname] = useState(" ")
-    const [pin, setPin] = useState(" ")
-    const [password, setPassword] = useState(" ");
-    const [email, setEmail] = useState(" ")
+    const [firstName, setFirstName] = useState("")
+    const [surName, setSurname] = useState("")
+    const [pin, setPin] = useState("")
+    const [money, setMoney] = useState("")
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("")
+    const [errors, setErrors] = useState([])
 
     const handleSubmitForm = event => {
         event.preventDefault();
     }
 
     const configMod = {
-        head: 'Register'
+        head: 'New Student Registeration'
+    }
+
+    const register =()=> {
+        axios.post("http://localhost:8000/register", {
+            firstName: firstName,
+            surName: surName,
+            pin: pin,
+            money: money,
+            password: password,
+            email: email
+        }).then((response) => {
+            console.log(response)
+        })
     }
 
     return (
 
-        <div className="formWrap">
-            <FormWrapper {...configMod}>
+        
+        <FormWrapper {...configMod}>
+            <div className="formWrap">
+                {errors.length > 0 && (
+                    <ul>
+                        {errors.map((err, index) => {
+                            return (
+                                <li key={index}>
+                                    {err}
+                                </li>
+                            )
+                        })}
+                    </ul>
+                )}
                 <form onSubmit={handleSubmitForm}>
 
                     
@@ -48,13 +76,20 @@ const Registration =(props)=> {
                         placeholder="Pin"
                         handleChange={e=> setPin(e.target.value)}
                     />
+                    <FormInput 
+                        type="text"
+                        name="money"
+                        value={money}
+                        placeholder="Money"
+                        handleChange={e=> setMoney(e.target.value)}
+                    />
                     <FormInput
-            type="password"
-            name="password"
-            value={password}
-            placeholder="Password"
-            handleChange={e => setPassword(e.target.value)}
-          />
+                        type="password"
+                        name="password"
+                        value={password}
+                        placeholder="Password"
+                        handleChange={e => setPassword(e.target.value)}
+                    />
                     <FormInput 
                         type="email"
                         name="email"
@@ -63,12 +98,12 @@ const Registration =(props)=> {
                         handleChange={e=> setEmail(e.target.value)}
                     />
 
-                    <Button type="submit">
+                    <Button onClick={register} type="submit">
                         Register
                     </Button>
                 </form>
-            </FormWrapper>
-        </div>
+            </div>
+        </FormWrapper>
     )
 }
 

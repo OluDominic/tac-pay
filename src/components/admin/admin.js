@@ -14,9 +14,10 @@ const Admin =(props)=> {
                             Register
                         </Link>
                     </li>
+                    
                     <li>
-                        <Link to="/transaction">
-                            Transaction
+                        <Link to="/payment">
+                            Payment History
                         </Link>
                     </li>
                 </ul>

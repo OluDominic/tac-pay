@@ -2,17 +2,48 @@ import React, {useState} from 'react';
 import FormInput from './../forms/FornInput/formInput'
 import Button from './../forms/Buttons'
 import FormWrapper from './../formWrapper'
-import { useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import axios from 'axios'
 import './index.scss'
+import { useHistory } from 'react-router-dom'
 
-const Login =(props)=> {
+
+
+
+
+const Login =({props, setToken})=> {
     const history = useHistory();
-    const [id, setId] = useState(" ")
-    const [password, setPassword] = useState(" ")
+    const [id, setId] = useState("")
+    const [password, setPassword] = useState("")
 
-    const handleSubmitForm = (event) => {
+    const handleSubmitForm = async event => {
         event.preventDefault();
-        history.push('/profile')
+       await loginUser({
+            id,
+            password
+        });
+    }
+
+    const loginUser =()=> {
+        axios.post("http://localhost:8000/login", {
+            username : id,
+            password: password
+        },{
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        })
+        .then((response) => {
+            let data = response.data;
+            localStorage.setItem("userdata",JSON.stringify(data));
+            if (data.usertype=='admin') {
+                history.push('/admin')
+            } else {
+                history.push('/profile')
+            }
+        }).catch((error)=>{
+            console.log(error)
+        })
     }
     
 
@@ -41,7 +72,7 @@ const Login =(props)=> {
                         handleChange={e => setPassword(e.target.value)}
                     />
 
-                    <Button type="submit">
+                    <Button onClick={loginUser} type="submit">
                         LogIn
                     </Button>
 
@@ -51,4 +82,9 @@ const Login =(props)=> {
     );
 }
 
-export default Login;
+
+export default Login
+
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
+}

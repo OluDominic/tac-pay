@@ -9,7 +9,7 @@ const StudentLay =(props)=> {
 
     return (
         <div className="tacAdminLay">
-            <Header {...props}/>
+            <Header {...props} />
             <div className="tacControl">
                 <div className="controlLay">
                     <View>
@@ -20,18 +20,8 @@ const StudentLay =(props)=> {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/balance">
-                                    Check Balance
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/payment">
-                                    Payment History
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/attendance">
-                                    Check Attendance
+                                <Link to="/transaction">
+                                    Transaction
                                 </Link>
                             </li>
                         </ul>

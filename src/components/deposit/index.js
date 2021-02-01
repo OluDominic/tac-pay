@@ -21,6 +21,8 @@ const Deposit =(props)=> {
         setIsOpen(!isOpen);
     }
 
+    
+
     const handleDeposit =()=> {
         history.push('/profile')
     }
@@ -49,7 +51,7 @@ const Deposit =(props)=> {
                         {isOpen && <Popup 
                          content={
                              <>
-                                <h3>Are you sure of the amount? N{setAmount}</h3>
+                                <h3>Are you sure of the amount? N{amount}</h3>
                                 <Button onClick={handleDeposit}>Confirm Deposit</Button>
                              </>
                          }

@@ -4,7 +4,11 @@
     display: block;
 
     .align {
-        text-align: center;
+        
+        h1 {
+            display: flex;
+            justify-content: center;
+        }
     }
 
     ul, li {
@@ -38,6 +42,7 @@
                 line-height: 1;
                 text-transform: uppercase;
             }
+
 
         }
     }
