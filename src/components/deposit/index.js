@@ -53,6 +53,7 @@ const Deposit =(props)=> {
                         />
 
                         <FormInput
+                        required
                         type="text"
                         name="amount"
                         value={amount}
@@ -61,6 +62,7 @@ const Deposit =(props)=> {
                         />
 
                         <FormInput
+                        required
                         type="text"
                         name="date"
                         value={date}
@@ -69,6 +71,7 @@ const Deposit =(props)=> {
                         />
 
                         <FormInput
+                        required
                         type="text"
                         name="comment"
                         value={comment}

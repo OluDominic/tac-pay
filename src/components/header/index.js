@@ -6,8 +6,9 @@ import Img from './../../taclogo.jpg'
 
 const Header = props=> {
     const history = useHistory()
-    let [userdata,setUserdata] = useState({});
-    let [userdataid,setUserdataid] = useState(null);
+    let [userdata, setUserdata] = useState({});
+    let [homepage, setHomepage] = useState({})
+    let [userdataid, setUserdataid] = useState(null);
 
     useEffect(() => {
         let data = localStorage.getItem('userdata')
@@ -18,14 +19,31 @@ const Header = props=> {
         else{
             data=JSON.parse(data);
             console.log(data)
-        setUserdataid(data.id);
+        setUserdataid(data.id||data.adminid);
         }
     },[])
+
+    useEffect(() => {
+        let data = localStorage.getItem('userdata')
+
+        if (!data) {
+           // history.push('/')
+        }
+        else{
+            data=JSON.parse(data);
+            console.log(data,'popop')
+      setUserdata(data);
+        }
+    },[]);
 
     const logout=()=>{
         localStorage.clear();
         setUserdata({});
         history.push('/')
+    }
+
+    const home=()=> {
+        let data = localStorage.getItem('userdata')
     }
     return(
         <header className="header">
@@ -40,7 +58,7 @@ const Header = props=> {
 
                     <ul>
                         <li>
-                            <Link to="/">
+                            <Link to="/profile">
                                 Home
                             </Link>
                        

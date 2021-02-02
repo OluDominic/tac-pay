@@ -18,19 +18,15 @@ const StudentLay =(props)=> {
                                     Deposit
                                 </Link>
                             </li>
+                            
+                            <li>
+                                <Link to="/transaction">
+                                    Transaction
+                                </Link>
+                            </li>
                             <li>
                                 <Link to="/balance">
                                     Check Balance
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/payment">
-                                    Payment History
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/attendance">
-                                    Check Attendance
                                 </Link>
                             </li>
                         </ul>

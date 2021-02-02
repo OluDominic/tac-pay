@@ -8,7 +8,7 @@ const Admin =(props)=> {
         <div className="admin">
             <div className="adminStep">
                 <h1>You are logged in as an admin</h1>
-                <ul>
+                {/*<ul>
                     <li>
                         <Link to="/register">
                             Register
@@ -21,6 +21,7 @@ const Admin =(props)=> {
                         </Link>
                     </li>
                 </ul>
+                */}
             </div>
         </div>
     );

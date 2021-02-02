@@ -1,7 +1,7 @@
 import React from 'react';
 import MainLay from './layouts/mainLay';
 import AdminLay from './layouts/adminLay';
-import StudentLay from './layouts/adminLay'
+import StudentLay from './layouts/studentLay'
 import HomeLay from './layouts/HomeLay';
 import { Switch, Route } from 'react-router-dom'
 import Admin from './pages/admin';
@@ -66,10 +66,11 @@ const App=(props)=> {
           </AdminLay>
         )} />
         <Route path="/payment" render={()=> (
-          <StudentLay>
+          <AdminLay>
             <Payment />
-          </StudentLay>
+          </AdminLay>
         )} />
+
         <Route path="/balance" render={()=> (
           <StudentLay>
             <CheckBal />

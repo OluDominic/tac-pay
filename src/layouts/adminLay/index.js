@@ -4,7 +4,7 @@ import Footer from './../../components/footer'
 import View from './../../components/View'
 import { Link } from 'react-router-dom'
 
-const StudentLay =(props)=> {
+const AdminLay =(props)=> {
     
 
     return (
@@ -20,8 +20,13 @@ const StudentLay =(props)=> {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/transaction">
-                                    Transaction
+                                <Link to="/register">
+                                    Register
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/payment">
+                                    Payment History
                                 </Link>
                             </li>
                         </ul>
@@ -36,4 +41,4 @@ const StudentLay =(props)=> {
     );
 }
 
-export default StudentLay;
+export default AdminLay;

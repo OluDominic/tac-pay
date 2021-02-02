@@ -62,7 +62,7 @@ const PaymentHistory =()=> {
     return (
         <div>
             <h1>
-                Transanction History
+                Payment History
             </h1>
 
             <FormSelect {...transOptions}/>

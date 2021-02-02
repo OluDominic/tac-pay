@@ -12,6 +12,7 @@ const Registration =(props)=> {
     const [pin, setPin] = useState("")
     const [money, setMoney] = useState("")
     const [password, setPassword] = useState("");
+    const [active, setActive] = useState("")
     const [email, setEmail] = useState("")
     const [errors, setErrors] = useState([])
 
@@ -30,6 +31,7 @@ const Registration =(props)=> {
             pin: pin,
             money: money,
             password: password,
+            active: active,
             email: email
         }).then((response) => {
             console.log(response)
@@ -90,6 +92,14 @@ const Registration =(props)=> {
                         placeholder="Password"
                         handleChange={e => setPassword(e.target.value)}
                     />
+                    <FormInput 
+                        type="number"
+                        name="active"
+                        value={active}
+                        placeholder="Active"
+                        handleChange={e=> setActive(e.target.value)}
+                    />
+                    
                     <FormInput 
                         type="email"
                         name="email"
