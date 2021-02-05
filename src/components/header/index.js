@@ -49,7 +49,7 @@ const Header = props=> {
         <header className="header">
             <div className="headAll">
                 <div className="logo">
-                    <Link to="/">
+                    <Link >
                         <img src={Img} alt="img"/>
                     </Link>
                 </div>
@@ -58,7 +58,7 @@ const Header = props=> {
 
                     <ul>
                         <li>
-                            <Link to="/profile">
+                            <Link >
                                 Home
                             </Link>
                        

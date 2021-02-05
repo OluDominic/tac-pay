@@ -12,10 +12,7 @@ const PaymentHistory =()=> {
     const [trans, setTrans ] = useState([])
     const [page, setPage ] = useState(1)
 
-    const handleTrans =(e)=> {
-        const option = e.target.value;
-        history.push(`/transaction/${option}`)
-    }
+    
 
     useEffect(() => {
         console.log("Behavior when the value of 'foo' changes.");
@@ -44,28 +41,12 @@ const PaymentHistory =()=> {
                 console.log(error);
             })
         }
-    const transOptions = {
-        defaultValue: handleTrans,
-        options: [{
-            name: 'Show all',
-            value: ''
-        }, {
-            name: 'Credit',
-            value: ''
-        }, {
-            name: 'Debit',
-            value: ''
-        }],
-        handleChange: handleTrans
-    }
 
     return (
         <div>
             <h1>
                 Payment History
             </h1>
-
-            <FormSelect {...transOptions}/>
 
             <div>
                 <table border="0" cellPadding="0" cellSpacing="0">

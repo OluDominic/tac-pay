@@ -65,7 +65,7 @@ const Login =({props, setToken})=> {
                         handleChange={e => setId(e.target.value)}
                         />
                     <FormInput
-                        type="text"
+                        type="password"
                         name="password"
                         value={password}
                         placeholder="Password"
