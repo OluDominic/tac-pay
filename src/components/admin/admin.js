@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet';
 import './admin.scss'
 
 const Admin =(props)=> {
@@ -7,6 +7,9 @@ const Admin =(props)=> {
     return(
         <div className="admin">
             <div className="adminStep">
+                <Helmet>
+                    <title>TAS Smart Card | Admin</title>
+                </Helmet>
                 <h1>You are logged in as an admin</h1>
                 {/*<ul>
                     <li>

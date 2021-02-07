@@ -4,6 +4,7 @@ import FormInput from './../forms/FornInput/formInput'
 import Button from './../forms/Buttons'
 import './index.scss'
 import FormWrapper from '../formWrapper';
+import { Helmet } from 'react-helmet'
 
 const Registration =(props)=> {
 
@@ -26,8 +27,8 @@ const Registration =(props)=> {
 
     const register =()=> {
         axios.post("http://localhost:8000/register", {
-            firstName: firstName,
-            surName: surName,
+            fname: firstName,
+            lname: surName,
             pin: pin,
             money: money,
             password: password,
@@ -39,9 +40,11 @@ const Registration =(props)=> {
     }
 
     return (
-
-        
-        <FormWrapper {...configMod}>
+        <div>
+            <Helmet>
+                  <title>TAS Smart Card | Registration Page</title>
+               </Helmet>
+            <FormWrapper {...configMod}>
             <div className="formWrap">
                 {errors.length > 0 && (
                     <ul>
@@ -114,6 +117,9 @@ const Registration =(props)=> {
                 </form>
             </div>
         </FormWrapper>
+        </div>
+        
+        
     )
 }
 

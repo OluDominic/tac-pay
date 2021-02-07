@@ -20,13 +20,28 @@ const AdminLay =(props)=> {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/register">
-                                    Register
+                                <Link to="/usertransaction">
+                                    My Transaction
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/transaction">
+                                    Transaction History
                                 </Link>
                             </li>
                             <li>
                                 <Link to="/payment">
                                     Payment History
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/delete">
+                                    Delete User
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/register">
+                                    Register
                                 </Link>
                             </li>
                         </ul>

@@ -9,7 +9,7 @@ const Footer =(props)=> {
             <div className="footwrap">
                <span>
                    <FontAwesomeIcon icon={faCopyright}/>
-                   </span> The Ambassadors Schools 2020 
+                   </span> The Ambassadors Schools 2021 
             </div>
         </footer>
     )

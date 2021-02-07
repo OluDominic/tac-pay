@@ -17,6 +17,7 @@ import Dashboard from './components/dashboard';
 import DepositPage from './pages/deposit';
 import TransactionHistory from './pages/transactionHistory';
 import DepositHis from './pages/depositHis';
+import DeleteUserPage from './pages/DeleteUserPage';
 
 const App=(props)=> {
 
@@ -66,6 +67,17 @@ const App=(props)=> {
             <Payment />
           </AdminLay>
         )} />
+        <Route path="/usertransaction" render={()=> (
+          <AdminLay>
+            <MyTranaction />
+          </AdminLay>
+        )} />
+
+        <Route path="/delete" render={()=> (
+          <AdminLay>
+            <DeleteUserPage />
+          </AdminLay>
+        )} />
 
         <Route path="/balance" render={()=> (
           <StudentLay>
@@ -86,11 +98,6 @@ const App=(props)=> {
           <StudentLay>
             <CheckAttendance />
           </StudentLay>
-        )} />
-        <Route path="/transaction" render={()=> (
-          <MainLay>
-            <MyTranaction />
-          </MainLay>
         )} />
       </Switch>
     </div>

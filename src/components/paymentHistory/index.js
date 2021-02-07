@@ -1,13 +1,11 @@
 import React, { useState, useEffect} from 'react'
-import FormSelect from './../forms/FormSelect'
-import { useHistory} from 'react-router-dom'
 import './index.scss'
 import axios from 'axios';
+import { Helmet } from 'react-helmet'
 import  {APPCONFIG} from '../../config/config';
 import JwPagination from 'jw-react-pagination';
 
 const PaymentHistory =()=> {
-    const history = useHistory();
 
     const [trans, setTrans ] = useState([])
     const [page, setPage ] = useState(1)
@@ -17,7 +15,7 @@ const PaymentHistory =()=> {
     useEffect(() => {
         console.log("Behavior when the value of 'foo' changes.");
        fetchPaymentHistory()
-      },[page]);
+      },[setTrans]);
     
  const fetchANew = (add)=>{
    let newpage = add?page+1:page-1;
@@ -44,6 +42,9 @@ const PaymentHistory =()=> {
 
     return (
         <div>
+            <Helmet>
+                <title>TAS Smart Card | Payment History</title>
+            </Helmet>
             <h1>
                 Payment History
             </h1>
@@ -108,8 +109,7 @@ const PaymentHistory =()=> {
                     </tbody>
                 </table>
 
-                {/** 
-  <JwPagination items={trans} onChangePage={ fetchANew} /> */}
+                
   <JwPagination items={trans} onChangePage={ fetchANew} /> 
           
             </div>

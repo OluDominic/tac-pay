@@ -1,56 +1,64 @@
 import React, {useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios';
+import { Helmet } from 'react-helmet'
 import './index.scss'
 import { APPCONFIG } from './../../config/config'
-import CheckBal from '../../pages/checkBalance/checkBalance'
+import JwPagination from 'jw-react-pagination'
+//import CheckBal from '../../pages/checkBalance/checkBalance'
 
 const TransHistory =(props)=> {
 
     const [userTrans, setUserTrans] = useState([])
-
-    let [userdata,setUserdata] = useState({});
+    const [page, setPage] = useState(1)
     
     useEffect(() => {
        
          fetchTrasactionsHistory()  
           
-      },[]);
+      },[setUserTrans]);
+
+      const fetchANew = (add)=>{
+        let newpage = add?page+1:page-1;
+         setPage(newpage);
+      }
+
+      
+      
 
     const fetchTrasactionsHistory =()=> {
-        let data = localStorage.getItem('userdata')
-
-        if (!data) {
-           // history.push('/')
-        }
-        else{
-            data=JSON.parse(data);
-           
-        setUserdata(data);
-        }
-        axios.get(`${APPCONFIG.appapi}/usertransactions?id=${data.id}`)
-        .then((data)=> {
-            setUserTrans(data.data)
-            console.log(userTrans,'user 5');
-        })
-        .catch((error)=> {
-            console.log(error)
-        })
+        console.log('Transaction fetched!')
+        const headers = {
+                "Content-Type": "application/json",
+                Authorization: `Bearer lll`,
+                "Access-Control-Allow-Origin":"*"
+            }
+    console.log(page,'here')
+            axios.get(`${APPCONFIG.appapi}/usertransactions?page=1`, {
+                headers
+            }).then((data) => {
+               
+                setUserTrans(data.data);
+            }).catch((error) => {
+                console.log(error);
+            })
     
     }
 
     return(
         <div>
             <div>
-                <CheckBal />
-                
+                {/*<CheckBal /> */}
+                <Helmet>
+                  <title>TAS Smart Card | Transaction History</title>
+               </Helmet>
                 <h1> Transaction History</h1>
                 <div>
                 <table border="0" cellPadding="0" cellSpacing="0">
                     <tbody>
                         <tr>
                             <td>
-                                <table className="paymentHeader" border="0" cellPadding="20" cellSpacing="10">
+                                <table className="paymentHeader" border="0" cellPadding="20" cellSpacing="15">
                                     <tbody>
                                         <tr>
                                             <th>
@@ -60,16 +68,10 @@ const TransHistory =(props)=> {
                                                 Amount
                                             </th>
                                             <th>
-                                                TagID
-                                            </th>
-                                            <th>
                                                 Time
                                             </th>
                                             <th>
                                                 Location
-                                            </th>
-                                            <th>
-                                               Transaction
                                             </th>
                                         </tr>
                                     </tbody>
@@ -91,16 +93,10 @@ const TransHistory =(props)=> {
                                                             {data.amount}
                                                         </td>
                                                         <td>
-                                                            {data.tagid}
-                                                        </td>
-                                                        <td>
                                                             {data.time}
                                                         </td>
                                                         <td>
                                                             {data.location}
-                                                        </td>
-                                                        <td>
-                                                            {data.transactionid}
                                                         </td>
                                                     </tr>
                                                 )
@@ -113,7 +109,11 @@ const TransHistory =(props)=> {
                         </tr>
                     </tbody>
                 </table>
+
+                
+  <JwPagination items={userTrans} onChangePage={ fetchANew} /> 
                 </div>
+                
             </div>
         </div>
     );

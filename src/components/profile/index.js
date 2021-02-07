@@ -1,5 +1,6 @@
 import React, { useState ,useEffect} from 'react';
 import './index.scss'
+import {Helmet} from 'react-helmet'
 import Avatar from './../../avatar.png'
 
 const Profile =(props)=> {
@@ -20,6 +21,9 @@ const Profile =(props)=> {
 
     return (
         <div className="profile">
+            <Helmet>
+                <title>TAS Smart Card | Profile</title>
+            </Helmet>
             <div className="align">
                 <h1 className="portal">My Portal</h1>
             </div>

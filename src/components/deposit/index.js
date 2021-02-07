@@ -7,6 +7,7 @@ import ErrorSucc from './errorSucc';
 import { useHistory } from 'react-router-dom'
 import FormInput from '../forms/FornInput/formInput'
 import FormWrapper from '../formWrapper';
+import { Helmet } from 'react-helmet';
 import './index.scss'
 
 const Deposit =(props)=> {
@@ -112,6 +113,9 @@ const Deposit =(props)=> {
     return (
         <div>
             <div>
+                <Helmet>
+                    <title>TAS Smart Card | Deposit Page</title>
+                </Helmet>
                 <h2 style={{textAlign:"center"}}>Deposit Page</h2>
                 <FormWrapper {...configWrap}>
                     
