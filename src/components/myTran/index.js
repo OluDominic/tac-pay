@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import CheckBalance from '../checkBalance';
 import Button from '../forms/Buttons';
 import FormInput from '../forms/FornInput/formInput';
@@ -25,7 +25,7 @@ const MyTran =()=> {
             Authorization: `Bearer lll`,
             "Access-Control-Allow-Origin":"*"
         }
-console.log('here')
+        console.log('here')
         axios.get(`${APPCONFIG.appapi}/usertrans?id=${trans}`, {
             headers
         }).then((data) => {
