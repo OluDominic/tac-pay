@@ -19,7 +19,7 @@ const StudentLay =(props)=> {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/userdeposit">
+                                <Link to="/attendance">
                                     Deposit History
                                 </Link>
                             </li>

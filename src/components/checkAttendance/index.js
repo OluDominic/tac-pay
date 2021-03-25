@@ -7,7 +7,10 @@ const CheckAttendance =()=> {
         <div>
             <h1>
                 Check Attendance
+                hyhhhhnnnnnnn
+                hhhhhhh
             </h1>
+            <p>gggghhhh</p>
         </div>
     );
 }

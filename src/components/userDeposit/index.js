@@ -70,7 +70,7 @@ const DepositHistory =()=> {
                                 <table border="0" cellSpacing="10" cellPadding="20">
                                     <tbody>
                                         {
-                                            userDeposit.map((data, i) => {
+                                            deposit.map((data, i) => {
                                                 return (
                                                     <tr key={i}>
                                                         <td>
