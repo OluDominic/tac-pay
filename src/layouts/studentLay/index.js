@@ -19,8 +19,13 @@ const StudentLay =(props)=> {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/attendance">
+                                <Link to="/userdeposit">
                                     Deposit History
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/transactionhistory">
+                                    Transaction History
                                 </Link>
                             </li>
                         </ul>

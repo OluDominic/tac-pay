@@ -4,14 +4,13 @@ import Popup from './../popup'
 import axios from 'axios'
 import ErrorFail from './error';
 import ErrorSucc from './errorSucc';
-import { useHistory } from 'react-router-dom'
 import FormInput from '../forms/FornInput/formInput'
 import FormWrapper from '../formWrapper';
 import { Helmet } from 'react-helmet';
+import {APPCONFIG} from './../../config/config';
 import './index.scss'
 
 const Deposit =(props)=> {
-    const history = useHistory();
     const [amount, setAmount] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [date, setDate] = useState('')
@@ -21,7 +20,9 @@ const Deposit =(props)=> {
     const [dateErr, setDateErr] = useState({})
     const [idErr, setIdErr] = useState({})
     const [commentErr, setCommentErr] = useState({})
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState('');
+    const [balance, setBalance] = useState('');
+    const [fetchBalance, setFetchBalance] = useState([]);
     let [id, setID] = useState("")
 
     const handleSubmit =(event, ) => {
@@ -30,6 +31,10 @@ const Deposit =(props)=> {
             if (isValid) {
                 Change()
             }
+    }
+
+    const handleSubmits =(event, ) => {
+        event.preventDefault();
     }
 
     useEffect(()=> {
@@ -95,6 +100,29 @@ const Deposit =(props)=> {
         }) 
     }
 
+    useEffect(()=> {
+        fetchUserBal()
+    },[])
+
+    const fetchUserBal = () => {
+    const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log(balance);
+        axios.get(`${APPCONFIG.appapi}/userbalance/${balance}`, {
+            headers
+        }).then((data) => {
+           
+         setFetchBalance(data.data);
+        }).catch((error) => {
+            console.log(error);
+        })
+
+
+    }
+
 
     const Change =()=> {
         setAmount('');
@@ -117,6 +145,23 @@ const Deposit =(props)=> {
                     <title>TAS Smart Card | Deposit Page</title>
                 </Helmet>
                 <h2 style={{textAlign:"center"}}>Deposit Page</h2>
+                <FormWrapper>
+                    <form onSubmit={handleSubmits}>
+                    <FormInput 
+                    type="text"
+                    name="balance"
+                    value={balance}
+                    placeholder="Enter ID"
+                    handleChange={e=> setBalance(e.target.value)}
+                    />
+                    <Button onClick={fetchUserBal} type="submit">
+                        Get Balance
+                    </Button>
+                    </form>
+
+                </FormWrapper>
+                
+                <h2>{fetchBalance.money}</h2>
                 <FormWrapper {...configWrap}>
                     
                 {errorMessage=='success'?<ErrorSucc /> : null }
@@ -153,7 +198,7 @@ const Deposit =(props)=> {
                         type="text"
                         name="date"
                         value={date}
-                        placeholder="Date"
+                        placeholder="Date (DD/MM/YYYY)"
                         handleChange={e => setDate(e.target.value) }
                         />
                         {Object.keys(dateErr).map((key)=> {

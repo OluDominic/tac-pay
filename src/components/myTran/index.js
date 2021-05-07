@@ -3,21 +3,21 @@ import CheckBalance from '../checkBalance';
 import Button from '../forms/Buttons';
 import FormInput from '../forms/FornInput/formInput';
 import FormWrapper from '../formWrapper';
-import axios from 'axios'
+import axios from 'axios';
+import moment from 'moment';
 import {APPCONFIG} from './../../config/config'
 import './index.scss'
-
+ 
 const MyTran =()=> {
-
-    const [trans, setTrans] = useState([])
+ 
+    const [trans, setTrans] = useState([]);
+    const [tran, setTran] = useState('');
     const handleSubmit =(event)=> {
         event.preventDefault();
     }
-
-    useEffect(()=> {
-        fetchUserTrans()
-    },[setTrans])
-
+ 
+    
+    //const {id} = useParams();
     const fetchUserTrans = () => {
         console.log(8999)
     const headers = {
@@ -25,8 +25,8 @@ const MyTran =()=> {
             Authorization: `Bearer lll`,
             "Access-Control-Allow-Origin":"*"
         }
-        console.log('here')
-        axios.get(`${APPCONFIG.appapi}/usertrans?id=${trans}`, {
+        console.log(tran);
+        axios.get(`${APPCONFIG.appapi}/usertranss/${tran}`, {
             headers
         }).then((data) => {
            
@@ -34,29 +34,31 @@ const MyTran =()=> {
         }).catch((error) => {
             console.log(error);
         })
-    }
 
+
+    }
+ 
     return(
         <div>
             <div>
-                <h1>
-                    <CheckBalance />
-                </h1>
                 <form onSubmit={handleSubmit}>
                     <FormWrapper>
                         <FormInput 
                         type="text"
                         name="trans"
-                        value={trans}
+                        value={tran}
                         placeholder="Enter Student ID"
-                        handleChange={e => setTrans(e.target.value) }
+                        handleChange={e => setTran(e.target.value) }
                         />
-
+ 
                         <Button onClick={fetchUserTrans} type="submit">
                             Get Transaction
                         </Button>
                     </FormWrapper>
                 </form>
+                <h1>
+                   {trans.money}
+                </h1>
                 <table border="0" cellPadding="0" cellSpacing="0">
                     <tbody>
                         <tr>
@@ -96,7 +98,7 @@ const MyTran =()=> {
                                                             {data.amount}
                                                         </td>
                                                         <td>
-                                                            {data.time}
+                                                            {moment(data.time).format('YYYY/MM/DD')}
                                                         </td>
                                                         <td>
                                                             {data.location}
@@ -116,5 +118,5 @@ const MyTran =()=> {
         </div>
     );
 }
-
+ 
 export default MyTran;

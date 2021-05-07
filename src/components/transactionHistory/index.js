@@ -4,7 +4,8 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet'
 import './index.scss'
 import { APPCONFIG } from './../../config/config'
-import JwPagination from 'jw-react-pagination'
+import JwPagination from 'jw-react-pagination';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 //import CheckBal from '../../pages/checkBalance/checkBalance'
 
 const TransHistory =(props)=> {
@@ -53,8 +54,15 @@ const TransHistory =(props)=> {
                   <title>TAS Smart Card | Transaction History</title>
                </Helmet>
                 <h1> Transaction History</h1>
+                <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button"
+                    table="table-to-xls"
+                    filename="tablexls"
+                    sheet="tablexls"
+                    buttonText="Download as XLS"/>
                 <div>
-                <table border="0" cellPadding="0" cellSpacing="0">
+                <table id="table-to-xls" border="0" cellPadding="0" cellSpacing="0">
                     <tbody>
                         <tr>
                             <td>

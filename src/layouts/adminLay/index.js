@@ -19,13 +19,13 @@ const AdminLay =(props)=> {
                                     Deposit
                                 </Link>
                             </li>
-                            {/*
+                            
                             <li>
                                 <Link to="/usertransaction">
                                     My Transaction
                                 </Link>
                             </li>
-                            */}
+                           
                             <li>
                                 <Link to="/transaction">
                                     Transaction History

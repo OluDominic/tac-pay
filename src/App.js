@@ -12,12 +12,14 @@ import CheckBal from './pages/checkBalance/checkBalance';
 import CheckAttendance from './pages/checkAttendance';
 import './default.scss';
 import MyTranaction from './pages/myTran';
+import UserDeposit from './components/userDeposit'
 import Homepage from './pages/Homepage';
 import Dashboard from './components/dashboard';
 import DepositPage from './pages/deposit';
 import TransactionHistory from './pages/transactionHistory';
-import DepositHis from './pages/depositHis';
+
 import DeleteUserPage from './pages/DeleteUserPage';
+import UserTrans from './pages/userTrans';
 
 const App=(props)=> {
 
@@ -84,9 +86,14 @@ const App=(props)=> {
             <CheckBal />
           </StudentLay>
         )} />
+        <Route path="/transactionhistory" render={()=> (
+          <StudentLay>
+            <UserTrans />
+          </StudentLay>
+        )} />
         <Route path="/userdeposit" render={()=> (
           <StudentLay>
-            <DepositHis />
+            <UserDeposit />
           </StudentLay>
         )} />
         <Route path="/deposit" render={()=> (

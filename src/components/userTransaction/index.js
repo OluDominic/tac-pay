@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useHistory } from 'react-router-dom'
-import { APPCONFIG} from './../../config/config'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import {APPCONFIG} from './../../config/config';
 import {
     TableContainer, Table, TableHead,
     TableRow, TableBody, TableCell, makeStyles
   } from '@material-ui/core';
-  import Paper from '@material-ui/core/Paper';
+import Paper from '@material-ui/core/Paper';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import moment from 'moment';
 import './index.scss'
 
+const UserTransaction =()=> {
 
-const DepositHistory =()=> {
-    //const history = useHistory();
-    const [deposit, setDeposit] = useState([])
-    const [userDeposit, setUserDeposit] = useState({})
+    const [trans, setTrans] = useState([]);
+    const [userTrans, setUserTrans] = useState({})
 
-    useEffect(() => {
-        fetchDepositHistory()
-    }, []);
+    useEffect(()=> {
+        fetchTransactions()
+    },[])
 
-    const fetchDepositHistory =()=> {
+    const fetchTransactions=()=> {
         let data = localStorage.getItem('userdata')
 
         if (!data) {
@@ -29,17 +29,16 @@ const DepositHistory =()=> {
             data=JSON.parse(data);
             //history.push('/admin')
            
-        setUserDeposit(data);
+            setUserTrans(data);
         }
-        axios.get(`${APPCONFIG.appapi}/userdeposit?id=${data.id}`)
-        .then((data)=> {
-            setDeposit(data.data)
-            console.log(deposit,'user 5');
+        axios.get(`${APPCONFIG.appapi}/usertranss?id=${data.id}`, {
+            
+        }).then((data) => {
+           
+         setTrans(data.data);
+        }).catch((error) => {
+            console.log(error);
         })
-        .catch((error)=> {
-            console.log(error)
-        })
-    
     }
 
     const useStyles = makeStyles({
@@ -64,9 +63,12 @@ const DepositHistory =()=> {
         padding: '4px 4px'
       };
 
+
     return (
         <div>
-            <h2>Deposit History</h2>
+            <h1>Transaction History</h1>
+            
+            
             <div>
                 <TableContainer component={Paper}>
                 <Table id="table-to-xls" className={useStyles.table}>
@@ -81,13 +83,13 @@ const DepositHistory =()=> {
                     </TableHead>
                     <TableBody>
                     
-                        {deposit.map((data, i)=> (
+                        {trans.map((data, i)=> (
                             
                             <TableRow className="linkss" key={i}>
                                 <TableCell style={stylesBody}>{i + 1}</TableCell>
-                                <TableCell style={stylesBody}>{data.money}</TableCell>
-                                <TableCell style={stylesBody}>{data.date}</TableCell>
-                                <TableCell style={stylesBody}>{data.comment}</TableCell>
+                                <TableCell style={stylesBody}>{data.amount}</TableCell>
+                                <TableCell style={stylesBody}>{moment(data.time).format('YYYY-MM-DD')}</TableCell>
+                                <TableCell style={stylesBody}>{data.location}</TableCell>
                                 {/* <TableCell style={stylesBody}><TableButton onClick={()=>{
                                                 handleClick(data.id)
                                 }}> Edit</TableButton> </TableCell> */}
@@ -103,4 +105,4 @@ const DepositHistory =()=> {
     );
 }
 
-export default DepositHistory;
+export default UserTransaction;
