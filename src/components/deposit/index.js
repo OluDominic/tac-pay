@@ -3,6 +3,7 @@ import Button from '../forms/Buttons';
 import Popup from './../popup'
 import axios from 'axios'
 import ErrorFail from './error';
+import Naira from 'react-naira';
 import ErrorSucc from './errorSucc';
 import FormInput from '../forms/FornInput/formInput'
 import FormWrapper from '../formWrapper';
@@ -24,6 +25,7 @@ const Deposit =(props)=> {
     const [balance, setBalance] = useState('');
     const [fetchBalance, setFetchBalance] = useState([]);
     let [id, setID] = useState("")
+    const [msg, setMsg] = useState('')
 
     const handleSubmit =(event, ) => {
         event.preventDefault();
@@ -93,11 +95,12 @@ const Deposit =(props)=> {
             date: date,
             comment: comment
         }).then((response) => {
-            setErrorMessage('success')
+            
             console.log(response)
         }).catch(error=> {
             setErrorMessage('error')
         }) 
+        
     }
 
     useEffect(()=> {
@@ -115,7 +118,7 @@ const Deposit =(props)=> {
             headers
         }).then((data) => {
            
-         setFetchBalance(data.data);
+         setFetchBalance(data.data[0]);
         }).catch((error) => {
             console.log(error);
         })
@@ -157,11 +160,12 @@ const Deposit =(props)=> {
                     <Button onClick={fetchUserBal} type="submit">
                         Get Balance
                     </Button>
+                    <h2><Naira>{fetchBalance.money}</Naira></h2>
                     </form>
 
                 </FormWrapper>
                 
-                <h2>{fetchBalance.money}</h2>
+                
                 <FormWrapper {...configWrap}>
                     
                 {errorMessage=='success'?<ErrorSucc /> : null }
@@ -227,6 +231,7 @@ const Deposit =(props)=> {
                          }
                          handleClose={togglePopup}
                         />}
+                        <div><h3 style={{color: 'green'}}>{msg} </h3></div>
                     </form>
                 </FormWrapper>
             </div>

@@ -4,14 +4,17 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet'
 import './index.scss'
 import { APPCONFIG } from './../../config/config'
+import moment from 'moment';
 import JwPagination from 'jw-react-pagination';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import FormInput from '../forms/FornInput/formInput';
 //import CheckBal from '../../pages/checkBalance/checkBalance'
 
 const TransHistory =(props)=> {
 
     const [userTrans, setUserTrans] = useState([])
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(1);
+    const [search, setSearch] = useState('');
     
     useEffect(() => {
        
@@ -23,6 +26,11 @@ const TransHistory =(props)=> {
         let newpage = add?page+1:page-1;
          setPage(newpage);
       }
+
+      let oldList = userTrans.map(userTrans => {
+          return {id: userTrans.id, amount: userTrans.amount, 
+        time: userTrans.time, location: userTrans.location}
+      })
 
       
       
@@ -61,6 +69,25 @@ const TransHistory =(props)=> {
                     filename="tablexls"
                     sheet="tablexls"
                     buttonText="Download as XLS"/>
+                    <div>
+                        <FormInput
+                        name="search"
+                        value={search}
+                        placeholder="Search box"
+                        handleChange={e => {
+                            if(e.target.value) {
+                                const filtered = userTrans.filter (userTrans => {
+                                    return userTrans.time.toLowerCase().includes(e.target.value.toLowerCase()) || 
+                                    userTrans.location.toLowerCase().includes(e.target.value.toLowerCase())
+                                })
+                                setUserTrans(filtered)
+                            } else {
+                                setUserTrans(oldList)
+                            }
+                            setSearch(e.target.value)
+                        }}
+                        />
+                    </div>
                 <div>
                 <table id="table-to-xls" border="0" cellPadding="0" cellSpacing="0">
                     <tbody>
@@ -101,7 +128,7 @@ const TransHistory =(props)=> {
                                                             {data.amount}
                                                         </td>
                                                         <td>
-                                                            {data.time}
+                                                            {moment(data.time).format('DD/MM/YYYY')}
                                                         </td>
                                                         <td>
                                                             {data.location}

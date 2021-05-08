@@ -4,13 +4,35 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet'
 import  {APPCONFIG} from '../../config/config';
 import JwPagination from 'jw-react-pagination';
+import FormInput from './../forms/FornInput/formInput';
 
 const PaymentHistory =()=> {
 
-    const [trans, setTrans ] = useState([])
-    const [page, setPage ] = useState(1)
+    const [trans, setTrans ] = useState([]);
+    const [page, setPage ] = useState(1);
+    const [search, setSearch] = useState("");
 
-    
+   
+    // useEffect(()=> {
+    //     getCharacter()
+    //     if (search && search.length > 1) {
+    //         if (search.length % 2 === 0) {
+    //             getCharacter()
+    //         }
+    //     }
+    // },[search]);
+
+    // const getCharacter=()=> {
+    //     const results = trans.filter(trans => 
+    //         trans.id.toLowerCase().includes(search.toLowerCase()) ||
+    //         trans.date.toLowerCase().includes(search.toLowerCase()));
+    //         setTrans(results)
+    // }
+
+    let oldlist = trans.map(trans => {
+        return {id: trans.id, comment: trans.comment, 
+            date: trans.date, money: trans.money};
+    });
 
     useEffect(() => {
         console.log("Behavior when the value of 'foo' changes.");
@@ -48,6 +70,24 @@ const PaymentHistory =()=> {
             <h1>
                 Payment History
             </h1>
+            <div>
+                <FormInput
+                name="search"
+                value={search || ""}
+                placeholder="Search Bar"
+                handleChange={e => {
+                    if (e.target.value) {
+                        const filteredTeams = trans.filter(trans => {
+                          return trans.date.toLowerCase().includes(e.target.value.toLowerCase())
+                        });
+                        setTrans(filteredTeams);
+                      } else {
+                        setTrans(oldlist);
+                      }
+                      setSearch(e.target.value);
+                  }}
+                />
+            </div>
 
             <div>
                 <table border="0" cellPadding="0" cellSpacing="0">
