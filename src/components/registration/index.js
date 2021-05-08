@@ -19,11 +19,22 @@ const Registration =(props)=> {
 
     const handleSubmitForm = event => {
         event.preventDefault();
+        reset();
     }
 
     const configMod = {
         head: 'New Student Registeration'
     }
+
+    const reset =()=> {
+        setFirstName('');
+        setSurname('');
+        setPin('');
+        setMoney('');
+        setPassword('');
+    }
+
+   
 
     const register =()=> {
         axios.post("http://localhost:8000/register", {
@@ -32,11 +43,14 @@ const Registration =(props)=> {
             pin: pin,
             money: money,
             password: password,
-            active: active,
-            email: email
-        }).then((response) => {
+            active: 1,
+            email: "info@theambassadorsschools.com"
+        })
+        .then((response) => {
             console.log(response)
         })
+        
+        
     }
 
     return (
@@ -59,54 +73,59 @@ const Registration =(props)=> {
                 )}
                 <form onSubmit={handleSubmitForm}>
 
-                    
-                    <FormInput 
-                        type="text"
-                        name="firstName"
-                        value={firstName}
-                        placeholder="Firstname"
-                        handleChange={e=> setFirstName(e.target.value)}
-                    />
+                    <label>Surname</label>
                     <FormInput 
                         type="text"
                         name="surName"
                         value={surName}
-                        placeholder="Surname"
+                        placeholder="Enter Surname"
                         handleChange={e=> setSurname(e.target.value)}
                     />
+                    <label>Firstname</label>
+                    <FormInput 
+                        type="text"
+                        name="firstName"
+                        value={firstName}
+                        placeholder="Enter Firstname"
+                        handleChange={e=> setFirstName(e.target.value)}
+                    />
+                    <label>Pin</label>
                     <FormInput 
                         type="number"
                         name="pin"
                         value={pin}
-                        placeholder="Pin"
+                        placeholder="Enter Pin"
                         handleChange={e=> setPin(e.target.value)}
                     />
+                    <label>Money</label>
                     <FormInput 
                         type="text"
                         name="money"
                         value={money}
-                        placeholder="Money"
+                        placeholder="Enter Amount"
                         handleChange={e=> setMoney(e.target.value)}
                     />
+                    <label>Password</label>
                     <FormInput
                         type="password"
                         name="password"
                         value={password}
-                        placeholder="Password"
+                        placeholder="Enter Password"
                         handleChange={e => setPassword(e.target.value)}
                     />
+                    <label>Active</label>
                     <FormInput 
-                        type="number"
+                        type="text"
                         name="active"
-                        value={active}
+                        value={1}
                         placeholder="Active"
                         handleChange={e=> setActive(e.target.value)}
                     />
-                    
+                    <label>Email</label>
                     <FormInput 
                         type="email"
                         name="email"
-                        value={email}
+                        value="info@theambassadorsschools.com"
                         placeholder="Email"
                         handleChange={e=> setEmail(e.target.value)}
                     />

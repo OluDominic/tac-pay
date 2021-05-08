@@ -1,3 +1,21 @@
 .paymentHeader {
     font-size: 18px;
 }
+
+.download-table-xls-button {
+    font-size: 14px;
+    color: white;
+    background-color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 400;
+    line-height: 1;
+    border: 1px solid black;
+    padding: 4px 8px;
+    margin: 0px 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: grey;
+        border: 1px solid white;
+    }
+}

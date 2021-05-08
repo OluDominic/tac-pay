@@ -138,6 +138,10 @@ const Deposit =(props)=> {
         setIsOpen(!isOpen);
     }
     const configWrap = {
+        head: 'Get Student Balance'
+    }
+
+    const configWraps = {
         head: 'Amount to deposit'
     }
 
@@ -147,8 +151,8 @@ const Deposit =(props)=> {
                 <Helmet>
                     <title>TAS Smart Card | Deposit Page</title>
                 </Helmet>
-                <h2 style={{textAlign:"center"}}>Deposit Page</h2>
-                <FormWrapper>
+                <h1 style={{textAlign:"center"}}>Deposit/Balance Page</h1>
+                <FormWrapper {...configWrap}>
                     <form onSubmit={handleSubmits}>
                     <FormInput 
                     type="text"
@@ -158,15 +162,15 @@ const Deposit =(props)=> {
                     handleChange={e=> setBalance(e.target.value)}
                     />
                     <Button onClick={fetchUserBal} type="submit">
-                        Get Balance
+                        Submit
                     </Button>
-                    <h2><Naira>{fetchBalance.money}</Naira></h2>
+                    <h2>Balance is <Naira>{fetchBalance.money}</Naira></h2>
                     </form>
 
                 </FormWrapper>
                 
                 
-                <FormWrapper {...configWrap}>
+                <FormWrapper {...configWraps}>
                     
                 {errorMessage=='success'?<ErrorSucc /> : null }
                 {errorMessage=='error'?<ErrorFail /> : null }

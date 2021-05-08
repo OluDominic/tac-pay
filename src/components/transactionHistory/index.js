@@ -66,7 +66,7 @@ const TransHistory =(props)=> {
                     id="test-table-xls-button"
                     className="download-table-xls-button"
                     table="table-to-xls"
-                    filename="tablexls"
+                    filename="Transaction History XLS"
                     sheet="tablexls"
                     buttonText="Download as XLS"/>
                     <div>

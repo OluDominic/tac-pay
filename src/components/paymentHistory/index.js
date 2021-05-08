@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet'
 import  {APPCONFIG} from '../../config/config';
 import JwPagination from 'jw-react-pagination';
 import FormInput from './../forms/FornInput/formInput';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 const PaymentHistory =()=> {
 
@@ -70,6 +71,13 @@ const PaymentHistory =()=> {
             <h1>
                 Payment History
             </h1>
+                <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button"
+                    table="table-to-xls"
+                    filename="Payment History XLS"
+                    sheet="tablexls"
+                    buttonText="Download as XLS"/>
             <div>
                 <FormInput
                 name="search"
@@ -90,7 +98,7 @@ const PaymentHistory =()=> {
             </div>
 
             <div>
-                <table border="0" cellPadding="0" cellSpacing="0">
+                <table id="table-to-xls" border="0" cellPadding="0" cellSpacing="0">
                     <tbody>
                         <tr>
                             <td>
