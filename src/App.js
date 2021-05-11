@@ -20,6 +20,7 @@ import TransactionHistory from './pages/transactionHistory';
 
 import DeleteUserPage from './pages/DeleteUserPage';
 import UserTrans from './pages/userTrans';
+import AdminDepositHis from './pages/AdminDepositHis';
 
 const App=(props)=> {
 
@@ -46,6 +47,11 @@ const App=(props)=> {
         <Route path="/transaction" render={()=> (
           <AdminLay>
             <TransactionHistory />
+          </AdminLay>
+        )}/>
+        <Route path="/deposithistory" render={()=> (
+          <AdminLay>
+            <AdminDepositHis />
           </AdminLay>
         )}/>
       {

@@ -13,8 +13,9 @@ import { useHistory } from 'react-router-dom'
 
 const Login =({props, setToken})=> {
     const history = useHistory();
-    const [id, setId] = useState("")
-    const [password, setPassword] = useState("")
+    const [id, setId] = useState("");
+    const [password, setPassword] = useState("");
+    const [loginMessage, setLoginMessage] = useState('');
 
     const handleSubmitForm = async event => {
         event.preventDefault();
@@ -41,6 +42,13 @@ const Login =({props, setToken})=> {
             } else {
                 history.push('/profile')
             }
+
+            if(response.data.message) {
+                setLoginMessage(response.data.message[0])
+            } else {
+                setLoginMessage(response.data[0])
+            }
+            console.log(response.data)
         }).catch((error)=>{
             console.log(error)
         })
@@ -57,6 +65,7 @@ const Login =({props, setToken})=> {
             
             <FormWrapper {...configWrap}>
                 <form onSubmit={handleSubmitForm}>
+                    <h3 style={{color: 'red'}}>{loginMessage}</h3>
                     <FormInput 
                         type="text"
                         name="id"

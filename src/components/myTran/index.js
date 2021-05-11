@@ -70,6 +70,9 @@ const MyTran =()=> {
                                                ID
                                             </th>
                                             <th>
+                                               Transaction ID
+                                            </th>
+                                            <th>
                                                 Amount
                                             </th>
                                             <th>
@@ -93,6 +96,9 @@ const MyTran =()=> {
                                                     <tr key={i}>
                                                         <td>
                                                             {data.id}
+                                                        </td>
+                                                        <td>
+                                                            {data.transactionid}
                                                         </td>
                                                         <td>
                                                             {data.amount}

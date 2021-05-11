@@ -25,7 +25,11 @@ const AdminLay =(props)=> {
                                     My Transaction
                                 </Link>
                             </li>
-                           
+                            <li>
+                                <Link to="/deposithistory">
+                                    User Deposit History
+                                </Link>
+                            </li>
                             <li>
                                 <Link to="/transaction">
                                     Transaction History
@@ -36,11 +40,11 @@ const AdminLay =(props)=> {
                                     Payment History
                                 </Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link to="/delete">
                                     Delete User
                                 </Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <Link to="/register">
                                     Register
@@ -53,7 +57,7 @@ const AdminLay =(props)=> {
                     {props.children}
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 }

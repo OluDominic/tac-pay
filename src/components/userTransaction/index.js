@@ -31,7 +31,8 @@ const UserTransaction =()=> {
            
             setUserTrans(data);
         }
-        axios.get(`${APPCONFIG.appapi}/usertranss?id=${data.id}`, {
+        console.log(data.id)
+        axios.get(`${APPCONFIG.appapi}/usertrans?id=${data.id}`, {
             
         }).then((data) => {
            

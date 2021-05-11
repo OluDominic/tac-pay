@@ -97,10 +97,16 @@ const TransHistory =(props)=> {
                                     <tbody>
                                         <tr>
                                             <th>
-                                               ID
+                                              Transaction ID
+                                            </th>
+                                            <th>
+                                               Student ID
                                             </th>
                                             <th>
                                                 Amount
+                                            </th>
+                                            <th>
+                                                Tag ID
                                             </th>
                                             <th>
                                                 Time
@@ -122,10 +128,16 @@ const TransHistory =(props)=> {
                                                 return (
                                                     <tr key={i}>
                                                         <td>
+                                                            {data.transactionid}
+                                                        </td>
+                                                        <td>
                                                             {data.id}
                                                         </td>
                                                         <td>
                                                             {data.amount}
+                                                        </td>
+                                                        <td>
+                                                            {data.tagid}
                                                         </td>
                                                         <td>
                                                             {moment(data.time).format('DD/MM/YYYY')}

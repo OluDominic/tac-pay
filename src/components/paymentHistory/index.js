@@ -3,6 +3,10 @@ import './index.scss'
 import axios from 'axios';
 import { Helmet } from 'react-helmet'
 import  {APPCONFIG} from '../../config/config';
+// import {
+//     TableContainer, Table, TableHead,
+//     TableRow, TableBody, TableCell, Paper, makeStyles
+//   } from '@material-ui/core';
 import JwPagination from 'jw-react-pagination';
 import FormInput from './../forms/FornInput/formInput';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
@@ -29,6 +33,28 @@ const PaymentHistory =()=> {
     //         trans.date.toLowerCase().includes(search.toLowerCase()));
     //         setTrans(results)
     // }
+
+    // const useStyles = makeStyles({
+    //     table: {
+    //     },
+    //   });
+
+    //   const stylesHead = {
+    //     fontSize: '20px',
+    //     cursor: 'pointer',
+    //     width: '15%',
+    //     fontWeight: '500',
+    //     textTransform: 'uppercase',
+    //     padding: '4px 4px'
+    //   };
+
+    //   const stylesBody = {
+    //     fontSize: '15px',
+    //     cursor: 'pointer',
+    //     width: '15%',
+    //     fontWeight: '400',
+    //     padding: '4px 4px'
+    //   };
 
     let oldlist = trans.map(trans => {
         return {id: trans.id, comment: trans.comment, 
@@ -98,24 +124,25 @@ const PaymentHistory =()=> {
             </div>
 
             <div>
-                <table id="table-to-xls" border="0" cellPadding="0" cellSpacing="0">
+               
+            <table id="table-to-xls" border="0" cellPadding="0" cellSpacing="0">
                     <tbody>
                         <tr>
                             <td>
-                                <table className="paymentHeader" border="0" cellPadding="10" cellSpacing="0">
+                                <table className="paymentHeader" border="0" cellPadding="20" cellSpacing="15">
                                     <tbody>
                                         <tr>
                                             <th>
                                                ID
                                             </th>
                                             <th>
-                                                Payment Details
-                                            </th>
-                                            <th>
-                                                Payment Date
-                                            </th>
-                                            <th>
                                                 Amount
+                                            </th>
+                                            <th>
+                                                Time
+                                            </th>
+                                            <th>
+                                                Location
                                             </th>
                                         </tr>
                                     </tbody>
@@ -124,39 +151,35 @@ const PaymentHistory =()=> {
                         </tr>
                         <tr>
                             <td>
-                                <table border="0" cellSpacing="0" cellPadding="10">
+                                <table border="0" cellSpacing="10" cellPadding="20">
                                     <tbody>
                                         {
-                                            trans.map((data,i)=>{
-                                                // console.log(data)
+                                            trans.map((data, i) => {
                                                 return (
-                                                
-                                                    <tr  key={i}>
+                                                    <tr key={i}>
                                                         <td>
                                                             {data.id}
                                                         </td>
                                                         <td>
-                                                            {data.comment}
+                                                            {data.money}
                                                         </td>
                                                         <td>
                                                             {data.date}
                                                         </td>
                                                         <td>
-                                                            {data.money}
+                                                            {data.comment}
                                                         </td>
                                                     </tr>
-                                                
                                                 )
                                             })
                                         }
-                                   
+                                        
                                     </tbody>
                                 </table>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-
                 
   <JwPagination items={trans} onChangePage={ fetchANew} /> 
           

@@ -37,6 +37,7 @@ const Deposit =(props)=> {
 
     const handleSubmits =(event, ) => {
         event.preventDefault();
+        reset();
     }
 
     useEffect(()=> {
@@ -131,9 +132,12 @@ const Deposit =(props)=> {
         setAmount('');
         setID('');
         setDate('');
-        setComment('')
+        setComment('');
     }
 
+    const reset =()=> {
+        setBalance('')
+    }
     const togglePopup =()=> {
         setIsOpen(!isOpen);
     }

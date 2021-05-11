@@ -34,7 +34,6 @@ const DepositHistory =()=> {
         axios.get(`${APPCONFIG.appapi}/userdeposit?id=${data.id}`)
         .then((data)=> {
             setDeposit(data.data)
-            console.log(deposit,'user 5');
         })
         .catch((error)=> {
             console.log(error)
