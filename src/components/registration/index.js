@@ -10,8 +10,10 @@ import {
     TableRow, TableBody, TableCell, Paper, makeStyles
   } from '@material-ui/core';
 import Modal from './../modal'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import FormSelect from '../forms/FormSelect';
+import { Link, useHistory } from 'react-router-dom';
 
 const Registration =(props)=> {
 
@@ -23,21 +25,29 @@ const Registration =(props)=> {
     const [password, setPassword] = useState("");
     const [active, setActive] = useState("")
     const [email, setEmail] = useState("");
+    const [search, setSearch] = useState("");
+
     const [errors, setErrors] = useState([]);
     const [students, setStudents] = useState([]);
 
     const [hideModal, setHideModal] = useState(true);
 
     const toggleModal =()=> setHideModal(!hideModal);
+    const history = useHistory();
 
     const configModal = {
         hideModal,
         toggleModal
     }
 
-    const handleSubmitForm = event => {
-        event.preventDefault();
-        reset();
+    let oldlist = students.map(students => {
+        return {tagid: students.tagid, firstName: students.fname, 
+            surName: students.lname, pin: students.pin, money: students.money, 
+            password: students.password, active: students.active, email: students.email};
+    });
+
+    const handleClick =(id)=> {
+        history.push('/updateuser/'+id)
     }
 
     const useStyles = makeStyles({
@@ -65,8 +75,13 @@ const Registration =(props)=> {
     const configMod = {
         head: 'New Student Registeration'
     }
+    const handleSubmitForm = event => {
+        event.preventDefault();
+        reset();
+    }
 
     const reset =()=> {
+        setTagid('');
         setFirstName('');
         setSurname('');
         setPin('');
@@ -76,7 +91,8 @@ const Registration =(props)=> {
 
     useEffect(()=> {
         fetchStudents()
-    },[])
+    },[]);
+
 
     const fetchStudents =()=> {
         const header = {
@@ -105,8 +121,9 @@ const Registration =(props)=> {
             money: money,
             password: password,
             active: active,
-            email: "info@theambassadorsschools.com"
+            email: email
         })
+        window.location.replace('http://localhost:3000/register')
         .then((response) => {
             console.log(response)
         })
@@ -130,6 +147,35 @@ const Registration =(props)=> {
                         </li>
                     </ul>
                 </span>
+                <span>
+                    <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button"
+                    table="table-to-xls"
+                    filename="All Users XLS"
+                    sheet="tablexls"
+                    buttonText="Download as XLS"/>
+                </span>
+            </div>
+            <div style={{display: 'none'}}>
+                <FormInput
+                name="search"
+                value={search}
+                placeholder="Search Bar"
+                handleChange={e => {
+                    if (e.target.value) {
+                        const filteredTeams = students.filter(students => {
+                          return students.tagid.includes(e.target.value) || students.fname.toLowerCase().includes(e.target.value.toLowerCase()) ||
+                          students.lname.toLowerCase().includes(e.target.value.toLowerCase()) || 
+                          students.pin.includes(e.target.value.toLowerCase())
+                        });
+                        setStudents(filteredTeams);
+                      } else {
+                        setStudents(oldlist);
+                      }
+                      setSearch(e.target.value);
+                  }}
+                />
             </div>
             <div>
                 <Modal {...configModal}>
@@ -200,6 +246,10 @@ const Registration =(props)=> {
                         <FormSelect 
                             options={[
                                 {
+                                    value: "active",
+                                    name: "active"
+                                },
+                                {
                                     value: "1",
                                     name: "1"
                                 },
@@ -210,13 +260,24 @@ const Registration =(props)=> {
                             ]}
                             handleChange={e => setActive(e.target.value)}
                         />
-                        <label>Email</label>
-                        <FormInput 
-                            type="email"
-                            name="email"
-                            value="info@theambassadorsschools.com"
-                            placeholder="Email"
-                            handleChange={e=> setEmail(e.target.value)}
+                        <label>User</label>
+
+                        <FormSelect 
+                            options={[
+                                {
+                                    value: "user",
+                                    name: "user"
+                                },
+                                {
+                                    value: "student",
+                                    name: "Student"
+                                },
+                                {
+                                    value: "staff",
+                                    name: "Staff"
+                                }
+                            ]}
+                            handleChange={e => setEmail(e.target.value)}
                         />
 
                         <Button onClick={register} type="submit">
@@ -229,7 +290,7 @@ const Registration =(props)=> {
         </div>
         <div>
         <TableContainer component={Paper}>
-                    <Table className={useStyles.table}>
+                    <Table id="table-to-xls" className={useStyles.table}>
                         <TableHead>
                             <TableRow>
                                 <TableCell style={stylesHead}>ID</TableCell>
@@ -242,13 +303,14 @@ const Registration =(props)=> {
                                 <TableCell style={stylesHead}>Password</TableCell>
                                 <TableCell style={stylesHead}>Active</TableCell>
                                 <TableCell style={stylesHead}>Email</TableCell>
+                                <TableCell style={stylesHead}>Edit</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {students.map((data, i) => {
                              return (
                                 <TableRow key={i}>
-                                    <TableCell style={stylesBody}>{data.id}</TableCell>
+                                    <TableCell style={stylesBody}>{i + 1}</TableCell>
                                     <TableCell style={stylesBody}>{data.tagid}</TableCell>
                                     <TableCell style={stylesBody}>{data.fname}</TableCell>
                                     <TableCell style={stylesBody}>{data.lname}</TableCell>
@@ -258,6 +320,17 @@ const Registration =(props)=> {
                                     <TableCell style={stylesBody}>{data.password}</TableCell>
                                     <TableCell style={stylesBody}>{data.active}</TableCell>
                                     <TableCell style={stylesBody}>{data.email}</TableCell>
+                                    <TableCell style={stylesBody}><div>
+                                        <ul>
+                                            <li>
+                                                <Link onClick={()=> {
+                                                    handleClick(data.id)
+                                                }}>
+                                                    Update
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                        </div></TableCell>
                                 </TableRow>
                         )})}
                     </TableBody>

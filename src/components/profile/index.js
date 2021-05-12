@@ -25,7 +25,7 @@ const Profile =(props)=> {
                 <title>TAS Smart Card | Profile</title>
             </Helmet>
             <div className="align">
-                <h1 className="portal">My Portal</h1>
+                {/* <h1 className="portal">My Portal</h1> */}
             </div>
             <ul>
                 <li>

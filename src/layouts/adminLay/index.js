@@ -16,13 +16,13 @@ const AdminLay =(props)=> {
                         <ul>
                             <li>
                                 <Link to="/deposit">
-                                    Deposit
+                                    Deposit/ Balance
                                 </Link>
                             </li>
                             
                             <li>
                                 <Link to="/usertransaction">
-                                    My Transaction
+                                    User Transaction History
                                 </Link>
                             </li>
                             <li>
@@ -32,22 +32,22 @@ const AdminLay =(props)=> {
                             </li>
                             <li>
                                 <Link to="/transaction">
-                                    Transaction History
+                                    All Transaction History
                                 </Link>
                             </li>
                             <li>
                                 <Link to="/payment">
-                                    Payment History
+                                    All Payment History
                                 </Link>
                             </li>
-                            {/* <li>
-                                <Link to="/delete">
-                                    Delete User
-                                </Link>
-                            </li> */}
                             <li>
                                 <Link to="/register">
-                                    Register
+                                    Students
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/delete">
+                                    Delete User
                                 </Link>
                             </li>
                         </ul>

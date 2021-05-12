@@ -79,9 +79,12 @@ const Deposit =(props)=> {
 
     function SubmitButton() {
         if (amount && date && id && comment ) {
-            return <Button onClick={depositAPI } type="submit">
+            return <div>
+                <Button onClick={depositAPI } type="submit">
             Deposit
         </Button>
+        
+            </div>
         } else {
             return <Button onClick={depositAPI} type="submit" disabled>
             Deposit
@@ -95,7 +98,9 @@ const Deposit =(props)=> {
             money: amount,
             date: date,
             comment: comment
-        }).then((response) => {
+        })
+        window.location.replace('http://localhost:3000/deposit')
+        .then((response) => {
             
             console.log(response)
         }).catch(error=> {

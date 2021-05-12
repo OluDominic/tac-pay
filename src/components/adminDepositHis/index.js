@@ -21,6 +21,7 @@ const AdminDeposit =()=> {
 
     const handleSubmit =(e)=> {
         e.preventDefault();
+        reset();
     }
 
       const stylesHead = {
@@ -31,6 +32,10 @@ const AdminDeposit =()=> {
         textTransform: 'uppercase',
         padding: '4px 4px'
       };
+
+      const reset =()=> {
+          setDeposit('');
+      }
 
       const stylesBody = {
         fontSize: '15px',

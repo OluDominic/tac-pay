@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import CheckBalance from '../checkBalance';
+import React, { useState } from 'react';
 import Button from '../forms/Buttons';
 import FormInput from '../forms/FornInput/formInput';
 import FormWrapper from '../formWrapper';
+import {
+    TableContainer, Table, TableHead,
+    TableRow, TableBody, TableCell, Paper, makeStyles
+  } from '@material-ui/core';
 import axios from 'axios';
 import moment from 'moment';
 import {APPCONFIG} from './../../config/config'
@@ -14,9 +17,34 @@ const MyTran =()=> {
     const [tran, setTran] = useState('');
     const handleSubmit =(event)=> {
         event.preventDefault();
+        reset();
     }
- 
+
+    const reset =()=> {
+        setTran('')
+    }
     
+    const useStyles = makeStyles({
+        table: {
+        },
+      });
+
+      const stylesHead = {
+        fontSize: '20px',
+        cursor: 'pointer',
+        width: 'auto',
+        fontWeight: '500',
+        textTransform: 'uppercase',
+        padding: '4px 4px'
+      };
+
+      const stylesBody = {
+        fontSize: '15px',
+        cursor: 'pointer',
+        width: '15%',
+        fontWeight: '400',
+        padding: '4px 4px'
+      };
     //const {id} = useParams();
     const fetchUserTrans = () => {
         console.log(8999)
@@ -41,6 +69,9 @@ const MyTran =()=> {
     return(
         <div>
             <div>
+                <h1>User Transactions</h1>
+            </div>
+            <div>
                 <form onSubmit={handleSubmit}>
                     <FormWrapper>
                         <FormInput 
@@ -59,67 +90,33 @@ const MyTran =()=> {
                 <h1>
                    {trans.money}
                 </h1>
-                <table border="0" cellPadding="0" cellSpacing="0">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <table className="paymentHeader" border="0" cellPadding="20" cellSpacing="15">
-                                    <tbody>
-                                        <tr>
-                                            <th>
-                                               ID
-                                            </th>
-                                            <th>
-                                               Transaction ID
-                                            </th>
-                                            <th>
-                                                Amount
-                                            </th>
-                                            <th>
-                                                Time
-                                            </th>
-                                            <th>
-                                                Location
-                                            </th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table border="0" cellSpacing="10" cellPadding="20">
-                                    <tbody>
-                                        {
-                                            trans.map((data, i) => {
-                                                return (
-                                                    <tr key={i}>
-                                                        <td>
-                                                            {data.id}
-                                                        </td>
-                                                        <td>
-                                                            {data.transactionid}
-                                                        </td>
-                                                        <td>
-                                                            {data.amount}
-                                                        </td>
-                                                        <td>
-                                                            {moment(data.time).format('YYYY/MM/DD')}
-                                                        </td>
-                                                        <td>
-                                                            {data.location}
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <TableContainer component={Paper}>
+                    <Table className={useStyles.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell style={stylesHead}>ID</TableCell>
+                                <TableCell style={stylesHead}>Transaction ID</TableCell>
+                                <TableCell style={stylesHead}>Amount</TableCell>
+                                <TableCell style={stylesHead}>Tag ID</TableCell>
+                                <TableCell style={stylesHead}>Date</TableCell>
+                                <TableCell style={stylesHead}>Location</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {trans.map((data, i) => {
+                             return (
+                                <TableRow key={i}>
+                                    <TableCell style={stylesBody}>{data.id}</TableCell>
+                                    <TableCell style={stylesBody}>{data.transactionid}</TableCell>
+                                    <TableCell style={stylesBody}>{data.amount}</TableCell>
+                                    <TableCell style={stylesBody}>{data.tagid}</TableCell>
+                                    <TableCell style={stylesBody}>{moment(data.time).format('DD/MM/YYYY')}</TableCell>
+                                    <TableCell style={stylesBody}>{data.location}</TableCell>
+                                </TableRow>
+                            )})}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
         </div>
     );
