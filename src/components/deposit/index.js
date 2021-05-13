@@ -173,7 +173,8 @@ const Deposit =(props)=> {
                     <Button onClick={fetchUserBal} type="submit">
                         Submit
                     </Button>
-                    <h2>Balance is <Naira>{fetchBalance.money}</Naira></h2>
+                    <br />
+                    <h3>{fetchBalance.fname} {fetchBalance.lname} Balance is <Naira>{fetchBalance.money}</Naira></h3>
                     </form>
 
                 </FormWrapper>

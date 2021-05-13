@@ -41,7 +41,7 @@ const Registration =(props)=> {
     }
 
     let oldlist = students.map(students => {
-        return {tagid: students.tagid, firstName: students.fname, 
+        return {tagid: students.tagid, firstName: students.fname, total: students.transactionno,
             surName: students.lname, pin: students.pin, money: students.money, 
             password: students.password, active: students.active, email: students.email};
     });
@@ -56,16 +56,16 @@ const Registration =(props)=> {
       });
 
       const stylesHead = {
-        fontSize: '19px',
+        fontSize: '15px',
         cursor: 'pointer',
         width: '15%',
-        fontWeight: '500',
+        fontWeight: 'bold',
         textTransform: 'uppercase',
         padding: '4px 4px'
       };
 
       const stylesBody = {
-        fontSize: '15px',
+        fontSize: '13px',
         cursor: 'pointer',
         width: '15%',
         fontWeight: '400',
@@ -157,7 +157,7 @@ const Registration =(props)=> {
                     buttonText="Download as XLS"/>
                 </span>
             </div>
-            <div style={{display: 'none'}}>
+            <div >
                 <FormInput
                 name="search"
                 value={search}
@@ -165,9 +165,8 @@ const Registration =(props)=> {
                 handleChange={e => {
                     if (e.target.value) {
                         const filteredTeams = students.filter(students => {
-                          return students.tagid.includes(e.target.value) || students.fname.toLowerCase().includes(e.target.value.toLowerCase()) ||
-                          students.lname.toLowerCase().includes(e.target.value.toLowerCase()) || 
-                          students.pin.includes(e.target.value.toLowerCase())
+                          return students.fname.toLowerCase().includes(e.target.value.toLowerCase()) ||
+                          students.lname.toLowerCase().includes(e.target.value.toLowerCase()) 
                         });
                         setStudents(filteredTeams);
                       } else {
@@ -298,7 +297,7 @@ const Registration =(props)=> {
                                 <TableCell style={stylesHead}>Firstname</TableCell>
                                 <TableCell style={stylesHead}>Lastname</TableCell>
                                 <TableCell style={stylesHead}>Pin</TableCell>
-                                <TableCell style={stylesHead}>Total Transactions</TableCell>
+                                <TableCell style={stylesHead}>Total Trans</TableCell>
                                 <TableCell style={stylesHead}>Balance</TableCell>
                                 <TableCell style={stylesHead}>Password</TableCell>
                                 <TableCell style={stylesHead}>Active</TableCell>
@@ -310,7 +309,7 @@ const Registration =(props)=> {
                             {students.map((data, i) => {
                              return (
                                 <TableRow key={i}>
-                                    <TableCell style={stylesBody}>{i + 1}</TableCell>
+                                    <TableCell style={stylesBody}>{data.id}</TableCell>
                                     <TableCell style={stylesBody}>{data.tagid}</TableCell>
                                     <TableCell style={stylesBody}>{data.fname}</TableCell>
                                     <TableCell style={stylesBody}>{data.lname}</TableCell>
@@ -320,14 +319,12 @@ const Registration =(props)=> {
                                     <TableCell style={stylesBody}>{data.password}</TableCell>
                                     <TableCell style={stylesBody}>{data.active}</TableCell>
                                     <TableCell style={stylesBody}>{data.email}</TableCell>
-                                    <TableCell style={stylesBody}><div>
+                                    <TableCell style={stylesBody}><div className="update">
                                         <ul>
-                                            <li>
-                                                <Link onClick={()=> {
-                                                    handleClick(data.id)
-                                                }}>
-                                                    Update
-                                                </Link>
+                                            <li onClick={()=> {
+                                                handleClick(data.id)
+                                            }}>
+                                                Update
                                             </li>
                                         </ul>
                                         </div></TableCell>
