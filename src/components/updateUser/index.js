@@ -8,15 +8,9 @@ import { APPCONFIG } from '../../config/config';
 import FormWrapper from '../formWrapper';
 
 const UpdateUser =()=> {
-    const [tagid, setTagid] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [surName, setSurname] = useState('');
-    const [pin, setPin] = useState('');
-    const [amount, setAmount] = useState('');
-    const [password, setPassword] = useState('');
-    const [active, setActive] = useState('');
-    const [email, setEmail] = useState('');
-    const [student, setStudent] = useState([])
+    
+    const [student, setStudent] = useState([]);
+    const [update, setUpdate] = useState('');
 
     const handleSubmit =(e)=> {
         e.preventDefault();
@@ -26,7 +20,12 @@ const UpdateUser =()=> {
 
     useEffect(()=> {
         fetchUser()
-    },[])
+    },[]);
+
+    const handleChange = e => {
+        const {name, value} = e.target;
+        setStudent({...student, [name]: value});
+    }
 
     const fetchUser =()=> {
 
@@ -54,6 +53,7 @@ const UpdateUser =()=> {
     const updateStudent=()=> {
 
         axios.put(`http://localhost:8000/updateuser/${id}`, {
+            id: student.id,
             tagid: student.tagid,
             fname: student.fname,
             lname: student.lname,
@@ -62,7 +62,8 @@ const UpdateUser =()=> {
             password: student.password,
             active: student.active,
             email: student.email
-        });
+        })
+        setUpdate('Record updated successfully')
     }
 
     
@@ -73,61 +74,75 @@ const UpdateUser =()=> {
             <div>
                 <FormWrapper {...headline}>
                 <form onSubmit={handleSubmit}>
+                <FormInput
+                    name="tagid"
+                    type="hidden"
+                    value={student.id}
+                    />
+                    <label>Tag ID</label>
                     <FormInput
                     name="tagid"
                     type="text"
                     value={student.tagid}
-                    handleChange={e => setTagid(e.target.value)}
+                    handleChange={handleChange}
                     />
+                    <label>Firstname</label>
                     <FormInput
                     name="firstname"
                     type="text"
                     placeholder="Fname"
                     value={student.fname}
-                    handleChange={e => setFirstName(e.target.value)}
+                    handleChange={handleChange}
                     />
+                    <label>Lastname</label>
                     <FormInput
                     name="surname"
                     type="text"
                     placeholder="Lname"
                     value={student.lname}
-                    handleChange={e => setSurname(e.target.value)}
+                    handleChange={handleChange}
                     />
+                    <label>Pin</label>
                     <FormInput
                     name="pin"
                     type="text"
                     placeholder="Pin"
                     value={student.pin}
-                    handleChange={e => setPin(e.target.value)}
+                    handleChange={handleChange}
                     />
+                    <label>Amount</label>
                     <FormInput
                     name="amount"
                     type="text"
                     placeholder="Money"
                     value={student.money}
-                    handleChange={e => setAmount(e.target.value)}
+                    handleChange={handleChange}
                     />
+                    <label>Password</label>
                     <FormInput
                     name="password"
                     type="text"
                     placeholder="Password"
                     value={student.password}
-                    handleChange={e => setPassword(e.target.value)}
+                    handleChange={handleChange}
                     />
+                    <label>Active</label>
                     <FormInput
                     name="active"
                     type="text"
                     placeholder="Active"
                     value={student.active}
-                    handleChange={e => setActive(e.target.value)}
+                    handleChange={handleChange}
                     />
+                    <label>Email</label>
                     <FormInput
                     name="email"
                     type="text"
                     placeholder="Email"
                     value={student.email}
-                    handleChange={e => setEmail(e.target.value)}
+                    handleChange={handleChange}
                     />
+                    <p style={{color: 'green'}}>{update}</p>
                     <Button type="submit" onClick={()=> {
                         updateStudent(student.id)
                     }}>

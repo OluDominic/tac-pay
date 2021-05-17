@@ -3,10 +3,11 @@ import './index.scss'
 import axios from 'axios';
 import { Helmet } from 'react-helmet'
 import  {APPCONFIG} from '../../config/config';
-// import {
-//     TableContainer, Table, TableHead,
-//     TableRow, TableBody, TableCell, Paper, makeStyles
-//   } from '@material-ui/core';
+import {
+    TableContainer, Table, TableHead,
+    TableRow, TableBody, TableCell, Paper, makeStyles
+  } from '@material-ui/core';
+import moment from 'moment';
 import JwPagination from 'jw-react-pagination';
 import FormInput from './../forms/FornInput/formInput';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
@@ -14,7 +15,6 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 const PaymentHistory =()=> {
 
     const [trans, setTrans ] = useState([]);
-    const [page, setPage ] = useState(1);
     const [search, setSearch] = useState("");
 
    
@@ -34,42 +34,52 @@ const PaymentHistory =()=> {
     //         setTrans(results)
     // }
 
-    // const useStyles = makeStyles({
-    //     table: {
-    //     },
-    //   });
+    const useStyles = makeStyles({
+        table: {
+        },
+      });
 
-    //   const stylesHead = {
-    //     fontSize: '20px',
-    //     cursor: 'pointer',
-    //     width: '15%',
-    //     fontWeight: '500',
-    //     textTransform: 'uppercase',
-    //     padding: '4px 4px'
-    //   };
+      const stylesHead = {
+        fontSize: '20px',
+        cursor: 'pointer',
+        width: '15%',
+        fontWeight: '500',
+        textTransform: 'uppercase',
+        padding: '4px 4px'
+      };
 
-    //   const stylesBody = {
-    //     fontSize: '15px',
-    //     cursor: 'pointer',
-    //     width: '15%',
-    //     fontWeight: '400',
-    //     padding: '4px 4px'
-    //   };
+      const stylesBody = {
+        fontSize: '15px',
+        cursor: 'pointer',
+        width: '15%',
+        fontWeight: '400',
+        padding: '4px 4px'
+      };
 
-    let oldlist = trans.map(trans => {
-        return {id: trans.id, comment: trans.comment, 
-            date: trans.date, money: trans.money};
-    });
+      const handleChange = event => {
+        setSearch(event.target.value);
+      };
+      useEffect(() => {
+        getCharacter()
+        if (search && search.length > 1) {
+            if (search.length % 2 === 0) {
+                getCharacter();
+            } 
+        } 
+      }, [search]);
+
+      const getCharacter =()=> {
+        const results = trans.filter( trans =>
+            trans.date.toLowerCase().includes(search.toLowerCase()) || 
+            trans.id.toLowerCase().includes(search.toLowerCase())
+          );
+          setTrans(results);
+      }
 
     useEffect(() => {
         console.log("Behavior when the value of 'foo' changes.");
        fetchPaymentHistory()
       },[setTrans]);
-    
- const fetchANew = (add)=>{
-   let newpage = add?page+1:page-1;
-    setPage(newpage);
- }
 
         const fetchPaymentHistory = () => {
             console.log(8999)
@@ -78,7 +88,7 @@ const PaymentHistory =()=> {
                 Authorization: `Bearer lll`,
                 "Access-Control-Allow-Origin":"*"
             }
-    console.log(page,'here')
+    console.log('here')
             axios.get(`${APPCONFIG.appapi}/fetchtransactions?page=1`, {
                 headers
             }).then((data) => {
@@ -109,79 +119,35 @@ const PaymentHistory =()=> {
                 name="search"
                 value={search || ""}
                 placeholder="Search Bar"
-                handleChange={e => {
-                    if (e.target.value) {
-                        const filteredTeams = trans.filter(trans => {
-                          return trans.date.toLowerCase().includes(e.target.value.toLowerCase())
-                        });
-                        setTrans(filteredTeams);
-                      } else {
-                        setTrans(oldlist);
-                      }
-                      setSearch(e.target.value);
-                  }}
+                handleChange={handleChange}
                 />
             </div>
 
             <div>
                
-            <table id="table-to-xls" border="0" cellPadding="0" cellSpacing="0">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <table className="paymentHeader" border="0" cellPadding="20" cellSpacing="15">
-                                    <tbody>
-                                        <tr>
-                                            <th>
-                                               ID
-                                            </th>
-                                            <th>
-                                                Amount
-                                            </th>
-                                            <th>
-                                                Time
-                                            </th>
-                                            <th>
-                                                Location
-                                            </th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table border="0" cellSpacing="10" cellPadding="20">
-                                    <tbody>
-                                        {
-                                            trans.map((data, i) => {
-                                                return (
-                                                    <tr key={i}>
-                                                        <td>
-                                                            {data.id}
-                                                        </td>
-                                                        <td>
-                                                            {data.money}
-                                                        </td>
-                                                        <td>
-                                                            {data.date}
-                                                        </td>
-                                                        <td>
-                                                            {data.comment}
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-  <JwPagination items={trans} onChangePage={ fetchANew} /> 
+            <TableContainer component={Paper}>
+                    <Table className={useStyles.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell style={stylesHead}>ID</TableCell>
+                                <TableCell style={stylesHead}>Amount</TableCell>
+                                <TableCell style={stylesHead}>Date</TableCell>
+                                <TableCell style={stylesHead}>Comment</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {trans.map((data, i) => {
+                             return (
+                                <TableRow key={i}>
+                                    <TableCell style={stylesBody}>{data.id}</TableCell>
+                                    <TableCell style={stylesBody}>{data.money}</TableCell>
+                                    <TableCell style={stylesBody}>{moment(data.date).format('DD/MM/YYYY')}</TableCell>
+                                    <TableCell style={stylesBody}>{data.comment}</TableCell>
+                                </TableRow>
+                            )})}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
           
             </div>
         </div>

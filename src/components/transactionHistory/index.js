@@ -5,6 +5,10 @@ import { Helmet } from 'react-helmet'
 import './index.scss'
 import { APPCONFIG } from './../../config/config'
 import moment from 'moment';
+import {
+    TableContainer, Table, TableHead,
+    TableRow, TableBody, TableCell, Paper, makeStyles
+  } from '@material-ui/core';
 import JwPagination from 'jw-react-pagination';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import FormInput from '../forms/FornInput/formInput';
@@ -27,12 +31,46 @@ const TransHistory =(props)=> {
          setPage(newpage);
       }
 
-      let oldList = userTrans.map(userTrans => {
-          return {id: userTrans.id, amount: userTrans.amount, 
-        time: userTrans.time, location: userTrans.location}
-      })
+      const handleChange = event => {
+        setSearch(event.target.value);
+      };
+      useEffect(() => {
+        getCharacter()
+        if (search && search.length > 1) {
+            if (search.length % 2 === 0) {
+                getCharacter();
+            } 
+        } 
+      }, [search]);
 
-      
+      const getCharacter =()=> {
+        const results = userTrans.filter( userTrans =>
+            userTrans.time.toLowerCase().includes(search.toLowerCase()) 
+          );
+          setUserTrans(results);
+      }
+
+      const useStyles = makeStyles({
+        table: {
+        },
+      });
+
+      const stylesHead = {
+        fontSize: '20px',
+        cursor: 'pointer',
+        width: '15%',
+        fontWeight: '500',
+        textTransform: 'uppercase',
+        padding: '4px 4px'
+      };
+
+      const stylesBody = {
+        fontSize: '15px',
+        cursor: 'pointer',
+        width: '15%',
+        fontWeight: '400',
+        padding: '4px 4px'
+      };
       
 
     const fetchTrasactionsHistory =()=> {
@@ -72,90 +110,39 @@ const TransHistory =(props)=> {
                     <div>
                         <FormInput
                         name="search"
-                        value={search}
+                        value={search || ""}
                         placeholder="Search box"
-                        handleChange={e => {
-                            if(e.target.value) {
-                                const filtered = userTrans.filter (userTrans => {
-                                    return userTrans.time.toLowerCase().includes(e.target.value.toLowerCase()) || 
-                                    userTrans.location.toLowerCase().includes(e.target.value.toLowerCase())
-                                })
-                                setUserTrans(filtered)
-                            } else {
-                                setUserTrans(oldList)
-                            }
-                            setSearch(e.target.value)
-                        }}
+                        handleChange={handleChange}
                         />
                     </div>
                 <div>
-                <table id="table-to-xls" border="0" cellPadding="0" cellSpacing="0">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <table className="paymentHeader" border="0" cellPadding="20" cellSpacing="15">
-                                    <tbody>
-                                        <tr>
-                                            <th>
-                                              Transaction ID
-                                            </th>
-                                            <th>
-                                               Student ID
-                                            </th>
-                                            <th>
-                                                Amount
-                                            </th>
-                                            <th>
-                                                Tag ID
-                                            </th>
-                                            <th>
-                                                Time
-                                            </th>
-                                            <th>
-                                                Location
-                                            </th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table border="0" cellSpacing="10" cellPadding="20">
-                                    <tbody>
-                                        {
-                                            userTrans.map((data, i) => {
-                                                return (
-                                                    <tr key={i}>
-                                                        <td>
-                                                            {data.transactionid}
-                                                        </td>
-                                                        <td>
-                                                            {data.id}
-                                                        </td>
-                                                        <td>
-                                                            {data.amount}
-                                                        </td>
-                                                        <td>
-                                                            {data.tagid}
-                                                        </td>
-                                                        <td>
-                                                            {moment(data.time).format('DD/MM/YYYY')}
-                                                        </td>
-                                                        <td>
-                                                            {data.location}
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <TableContainer component={Paper}>
+                    <Table className={useStyles.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell style={stylesHead}>Transaction ID</TableCell>
+                                <TableCell style={stylesHead}>Student ID</TableCell>
+                                <TableCell style={stylesHead}>Amount</TableCell>
+                                <TableCell style={stylesHead}>Tag ID</TableCell>
+                                <TableCell style={stylesHead}>Date</TableCell>
+                                <TableCell style={stylesHead}>Location</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {userTrans.map((data, i) => {
+                             return (
+                                <TableRow key={i}>
+                                    <TableCell style={stylesBody}>{data.transactionid}</TableCell>
+                                    <TableCell style={stylesBody}>{data.id}</TableCell>
+                                    <TableCell style={stylesBody}>{data.amount}</TableCell>
+                                    <TableCell style={stylesBody}>{data.tagid}</TableCell>
+                                    <TableCell style={stylesBody}>{moment(data.time).format('DD/MM/YYYY')}</TableCell>
+                                    <TableCell style={stylesBody}>{data.location}</TableCell>
+                                </TableRow>
+                            )})}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
                 
   <JwPagination items={userTrans} onChangePage={ fetchANew} /> 
