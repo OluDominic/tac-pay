@@ -4,6 +4,8 @@ import { transitions, positions, Provider as AlertProvider} from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App';
+import {store} from './redux/store';
+import { Provider } from 'react-redux';
 
   
 const options = {
@@ -17,9 +19,11 @@ const options = {
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AlertProvider template={AlertTemplate} {...options}>
-        <App />
-      </AlertProvider>
+      <Provider store={store}>
+        <AlertProvider template={AlertTemplate} {...options}>
+          <App />
+        </AlertProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

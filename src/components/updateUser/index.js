@@ -6,66 +6,41 @@ import './index.scss';
 import { useParams } from 'react-router';
 import { APPCONFIG } from '../../config/config';
 import FormWrapper from '../formWrapper';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUpdate, getUserUpdate } from '../../redux/admin/adminActions';
 
 const UpdateUser =()=> {
     
-    const [student, setStudent] = useState([]);
+    
     const [update, setUpdate] = useState('');
-
+    
+    const dispatch = useDispatch()
+    const data = useSelector(state=> state.admin.data)
+    const [student, setStudent] = useState([]);
     const handleSubmit =(e)=> {
         e.preventDefault();
+        dispatch(fetchUpdate(data.id, data.tagid, 
+            data.fname, data.lname, data.pin, data.password,
+            data.active, data.email))
     }
 
     let {id} = useParams();
 
-    useEffect(()=> {
-        fetchUser()
-    },[]);
 
     const handleChange = e => {
         const {name, value} = e.target;
-        setStudent({...student, [name]: value});
+        setStudent({...data, [name]: value});
     }
 
-    const fetchUser =()=> {
+    console.log(student)
 
-        const headers = {
-            'Content-Type': 'application/json',
-            Authorization : 'Bearer 111',
-            'Access-Control-Allow-Origin' : '*'
-        }
-        console.log(student.id)
-        axios.get(`${APPCONFIG.appapi}/fetchstudent/${id}`, {
-            headers
-        })
-        .then((data, response)=> {
-            setStudent(data.data[0])
-        })
-        .catch((error)=> {
-            console.log(error)
-        })
-    }
+    useEffect(()=> {
+        dispatch(getUserUpdate(id))
+    },[])
 
     const headline= {
         head: "Update Student Info"
     }
-
-    const updateStudent=()=> {
-
-        axios.put(`http://localhost:8000/updateuser/${id}`, {
-            id: student.id,
-            tagid: student.tagid,
-            fname: student.fname,
-            lname: student.lname,
-            pin: student.pin,
-            money: student.money,
-            password: student.password,
-            active: student.active,
-            email: student.email
-        })
-        setUpdate('Record updated successfully')
-    }
-
     
 
     return (
@@ -77,13 +52,14 @@ const UpdateUser =()=> {
                 <FormInput
                     name="tagid"
                     type="hidden"
-                    value={student.id}
+                    value={data.id}
                     />
                     <label>Tag ID</label>
                     <FormInput
                     name="tagid"
                     type="text"
-                    value={student.tagid}
+                    placeholder="TagID"
+                    value={data.tagid}
                     handleChange={handleChange}
                     />
                     <label>Firstname</label>
@@ -91,7 +67,7 @@ const UpdateUser =()=> {
                     name="firstname"
                     type="text"
                     placeholder="Fname"
-                    value={student.fname}
+                    value={data.fname}
                     handleChange={handleChange}
                     />
                     <label>Lastname</label>
@@ -99,7 +75,7 @@ const UpdateUser =()=> {
                     name="surname"
                     type="text"
                     placeholder="Lname"
-                    value={student.lname}
+                    value={data.lname}
                     handleChange={handleChange}
                     />
                     <label>Pin</label>
@@ -107,15 +83,7 @@ const UpdateUser =()=> {
                     name="pin"
                     type="text"
                     placeholder="Pin"
-                    value={student.pin}
-                    handleChange={handleChange}
-                    />
-                    <label>Amount</label>
-                    <FormInput
-                    name="amount"
-                    type="text"
-                    placeholder="Money"
-                    value={student.money}
+                    value={data.pin}
                     handleChange={handleChange}
                     />
                     <label>Password</label>
@@ -123,7 +91,7 @@ const UpdateUser =()=> {
                     name="password"
                     type="text"
                     placeholder="Password"
-                    value={student.password}
+                    value={data.password}
                     handleChange={handleChange}
                     />
                     <label>Active</label>
@@ -131,7 +99,7 @@ const UpdateUser =()=> {
                     name="active"
                     type="text"
                     placeholder="Active"
-                    value={student.active}
+                    value={data.active}
                     handleChange={handleChange}
                     />
                     <label>Email</label>
@@ -139,13 +107,11 @@ const UpdateUser =()=> {
                     name="email"
                     type="text"
                     placeholder="Email"
-                    value={student.email}
+                    value={data.email}
                     handleChange={handleChange}
                     />
                     <p style={{color: 'green'}}>{update}</p>
-                    <Button type="submit" onClick={()=> {
-                        updateStudent(student.id)
-                    }}>
+                    <Button type="submit" >
                         Update
                     </Button>
                 </form>

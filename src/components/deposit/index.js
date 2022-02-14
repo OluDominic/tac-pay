@@ -9,42 +9,45 @@ import FormInput from '../forms/FornInput/formInput'
 import FormWrapper from '../formWrapper';
 import { Helmet } from 'react-helmet';
 import {APPCONFIG} from './../../config/config';
+import { useSelector, useDispatch } from 'react-redux';
 import './index.scss'
+import { fetchBalance, postDeposit } from '../../redux/admin/adminActions';
 
 const Deposit =(props)=> {
     const [amount, setAmount] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [date, setDate] = useState('')
     const [comment, setComment] = useState("")
-    const [errors, setErrors] = useState([])
     const [amountErr, setAmountErr] = useState({})
     const [dateErr, setDateErr] = useState({})
     const [idErr, setIdErr] = useState({})
     const [commentErr, setCommentErr] = useState({})
     const [errorMessage, setErrorMessage] = useState('');
     const [balance, setBalance] = useState('');
-    const [fetchBalance, setFetchBalance] = useState([]);
     let [id, setID] = useState("")
-    const [msg, setMsg] = useState('')
 
-    const handleSubmit =(event, ) => {
+    const dispatch = useDispatch();
+    const users = useSelector(state=> state.admin.data)
+
+    const handleSubmit =(event) => {
         event.preventDefault();
         const isValid = formValidation()
             if (isValid) {
                 Change()
             }
+            if (id && amount && date && comment ) {
+                dispatch(postDeposit(id, amount, date, comment ))
+               
+            } 
     }
 
-    const handleSubmits =(event, ) => {
+    const handleSubmits =(event) => {
         event.preventDefault();
+        if(balance) {
+            dispatch(fetchBalance(balance))
+        }
         reset();
     }
-
-    useEffect(()=> {
-        if (depositAPI) {
-            Change();
-        }
-    }, [])
     
     const formValidation=()=> {
         const idErr = {}
@@ -75,61 +78,6 @@ const Deposit =(props)=> {
         setAmountErr(amountErr);
         setCommentErr(commentErr);
         return isValid;
-    }
-
-    function SubmitButton() {
-        if (amount && date && id && comment ) {
-            return <div>
-                <Button onClick={depositAPI } type="submit">
-            Deposit
-        </Button>
-        
-            </div>
-        } else {
-            return <Button onClick={depositAPI} type="submit" disabled>
-            Deposit
-        </Button>
-        }
-    }
-
-    const depositAPI =()=> {
-        axios.post("http://localhost:8000/deposit", {
-            id: id,
-            money: amount,
-            date: date,
-            comment: comment
-        })
-        window.location.replace('http://localhost:3000/deposit')
-        .then((response) => {
-            
-            console.log(response)
-        }).catch(error=> {
-            setErrorMessage('error')
-        }) 
-        
-    }
-
-    useEffect(()=> {
-        fetchUserBal()
-    },[])
-
-    const fetchUserBal = () => {
-    const headers = {
-            "Content-Type": "application/json",
-            Authorization: `Bearer lll`,
-            "Access-Control-Allow-Origin":"*"
-        }
-        console.log(balance);
-        axios.get(`${APPCONFIG.appapi}/userbalance/${balance}`, {
-            headers
-        }).then((data) => {
-           
-         setFetchBalance(data.data[0]);
-        }).catch((error) => {
-            console.log(error);
-        })
-
-
     }
 
 
@@ -170,11 +118,11 @@ const Deposit =(props)=> {
                     placeholder="Enter ID"
                     handleChange={e=> setBalance(e.target.value)}
                     />
-                    <Button onClick={fetchUserBal} type="submit">
+                    <Button type="submit">
                         Submit
                     </Button>
                     <br />
-                    <h3>{fetchBalance.fname} {fetchBalance.lname} Balance is <Naira>{fetchBalance.money}</Naira></h3>
+                    <h3>{users.fname} {users.lname} Balance is <Naira>{users.money}</Naira></h3>
                     </form>
 
                 </FormWrapper>
@@ -234,9 +182,9 @@ const Deposit =(props)=> {
                         {Object.keys(commentErr).map((key)=> {
                             return <div style={{ fontSize: 12, color: "red"}}>{commentErr[key]}</div>
                         })}
-                        <SubmitButton />
+                        <Button type="submit"> Sunmit </Button>
 
-                        {isOpen && <Popup 
+                        {/* {isOpen && <Popup 
                          content={
                              <>
                                 <h3>Are you sure of the amount? N{amount}</h3>
@@ -245,7 +193,7 @@ const Deposit =(props)=> {
                          }
                          handleClose={togglePopup}
                         />}
-                        <div><h3 style={{color: 'green'}}>{msg} </h3></div>
+                        <div><h3 style={{color: 'green'}}>{msg} </h3></div> */}
                     </form>
                 </FormWrapper>
             </div>

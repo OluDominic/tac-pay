@@ -10,6 +10,7 @@
 
 # production
 /build
+/tac-api
 
 # misc
 .DS_Store

@@ -1,25 +1,31 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Button from '../forms/Buttons'
 import FormInput from '../forms/FornInput/formInput'
 import FormWrapper from '../formWrapper'
-import axios from 'axios'
 import { Helmet } from 'react-helmet'
+import { useDispatch } from 'react-redux'
 import './index.scss'
+import { fetchDelete } from '../../redux/admin/adminActions';
 
 const DeleteUser =()=> {
 
-    const [deleteUser, setDeleteUser] = useState("")
+    const [deleteUser, setDeleteUser] = useState("");
+    const dispatch = useDispatch()
+    
     const configWrapper = {
         head : 'Delete User'
     }
 
-    const deletePage =()=> {
-        axios.post("http://localhost:8000/delete", {
-            id: deleteUser
-        })
-        .then((response)=> {
-            console.log(response)
-        })
+    const handleSubmit =(event) => {
+        event.preventDefault();
+        if(deleteUser) {
+            dispatch(fetchDelete(deleteUser))
+            reset();
+        }
+    }
+
+    const reset =()=> {
+        setDeleteUser('')
     }
     return (
         <div>
@@ -27,7 +33,7 @@ const DeleteUser =()=> {
                   <title>TAS Smart Card | Delete User</title>
                </Helmet>
             <h2>Delete Student</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <FormWrapper {...configWrapper}>
                     <FormInput 
                     type="text"
@@ -37,7 +43,7 @@ const DeleteUser =()=> {
                     handleChange={e => setDeleteUser(e.target.value) }
                     />
 
-                    <Button type="submit" onClick={deletePage}>
+                    <Button type="submit">
                         Delete User
                     </Button>
                 </FormWrapper>

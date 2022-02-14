@@ -1,59 +1,26 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import FormInput from './../forms/FornInput/formInput'
 import Button from './../forms/Buttons'
 import FormWrapper from './../formWrapper'
 import PropTypes from 'prop-types'
-import axios from 'axios'
+import { useDispatch} from 'react-redux'
 import './index.scss'
-import { useHistory } from 'react-router-dom'
+import { fetchUser } from '../../redux/users/userActions';
 
 
+const Login =()=> {
+    const dispatch = useDispatch();
 
-
-
-const Login =({props, setToken})=> {
-    const history = useHistory();
-    const [id, setId] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loginMessage, setLoginMessage] = useState('');
 
-    const handleSubmitForm = async event => {
+    const handleSubmitForm = event => {
         event.preventDefault();
-       await loginUser({
-            id,
-            password
-        });
+        if (username && password) {
+            dispatch(fetchUser(username, password))
+        }
     }
-
-    const loginUser =()=> {
-        axios.post("http://localhost:8000/login", {
-            username : id,
-            password: password
-        },{
-            "Content-Type": "application/json",
-            Authorization: `Bearer lll`,
-            "Access-Control-Allow-Origin":"*"
-        })
-        .then((response) => {
-            let data = response.data;
-            localStorage.setItem("userdata",JSON.stringify(data));
-            if (data.usertype=='admin') {
-                history.push('/admin')
-            } else {
-                history.push('/profile')
-            }
-
-            if(response.data.message) {
-                setLoginMessage(response.data.message[0])
-            } else {
-                setLoginMessage(response.data[0])
-            }
-            console.log(response.data)
-        }).catch((error)=>{
-            console.log(error)
-        })
-    }
-    
 
     const configWrap = {
         head: 'Login Here'
@@ -69,9 +36,9 @@ const Login =({props, setToken})=> {
                     <FormInput 
                         type="text"
                         name="id"
-                        value={id}
+                        value={username}
                         placeholder="ID"
-                        handleChange={e => setId(e.target.value)}
+                        handleChange={e => setUsername(e.target.value)}
                         />
                     <FormInput
                         type="password"
@@ -81,7 +48,7 @@ const Login =({props, setToken})=> {
                         handleChange={e => setPassword(e.target.value)}
                     />
 
-                    <Button onClick={loginUser} type="submit">
+                    <Button type="submit">
                         LogIn
                     </Button>
 

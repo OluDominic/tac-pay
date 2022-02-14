@@ -7,13 +7,15 @@ import FormWrapper from '../formWrapper';
 import {APPCONFIG} from './../../config/config';
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, Paper, makeStyles
+    TableRow, TableBody, TableCell, Paper
   } from '@material-ui/core';
 import Modal from './../modal'
 import { Helmet } from 'react-helmet';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import FormSelect from '../forms/FormSelect';
 import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllStudents, postRegister } from '../../redux/admin/adminActions';
 
 const Registration =(props)=> {
 
@@ -29,6 +31,11 @@ const Registration =(props)=> {
 
     const [errors, setErrors] = useState([]);
     const [students, setStudents] = useState([]);
+    
+
+    const dispatch = useDispatch();
+    const data = useSelector(state=> state.admin.data)
+    const loading = useSelector(state=> state.admin.loading)
 
     const [hideModal, setHideModal] = useState(true);
 
@@ -49,11 +56,6 @@ const Registration =(props)=> {
     const handleClick =(id)=> {
         history.push('/updateuser/'+id)
     }
-
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
 
       const stylesHead = {
         fontSize: '15px',
@@ -77,7 +79,10 @@ const Registration =(props)=> {
     }
     const handleSubmitForm = event => {
         event.preventDefault();
-        reset();
+        if (tagid&&firstName&&surName&&pin&&money&&password&&active&&email) {
+            dispatch(postRegister(tagid,firstName,surName,pin,money,password,active,email))
+            reset()
+        }
     }
 
     const reset =()=> {
@@ -90,46 +95,8 @@ const Registration =(props)=> {
     }
 
     useEffect(()=> {
-        fetchStudents()
+        dispatch(fetchAllStudents())
     },[]);
-
-
-    const fetchStudents =()=> {
-        const header = {
-            "Content-Type" : 'application/json',
-            Authorisation : "Bearer 111",
-            "Access-Control-Allow-Origin" : "*"
-        }
-
-        axios.get(`${APPCONFIG.appapi}/fetchstudents`, {
-            header
-        })
-        .then((data)=> {
-            setStudents(data.data)
-        })
-        .catch((err)=> {
-            console.log(err)
-        })
-    }
-
-    const register =()=> {
-        axios.post("http://localhost:8000/register", {
-            tagid: tagid,
-            fname: firstName,
-            lname: surName,
-            pin: pin,
-            money: money,
-            password: password,
-            active: active,
-            email: email
-        })
-        window.location.replace('http://localhost:3000/register')
-        .then((response) => {
-            console.log(response)
-        })
-        
-        
-    }
 
     return (
         <div>
@@ -279,7 +246,7 @@ const Registration =(props)=> {
                             handleChange={e => setEmail(e.target.value)}
                         />
 
-                        <Button onClick={register} type="submit">
+                        <Button type="submit">
                             Register
                         </Button>
                     </form>
@@ -288,8 +255,9 @@ const Registration =(props)=> {
             </Modal>
         </div>
         <div>
+        
         <TableContainer component={Paper}>
-                    <Table id="table-to-xls" className={useStyles.table}>
+                    <Table id="table-to-xls">
                         <TableHead>
                             <TableRow>
                                 <TableCell style={stylesHead}>ID</TableCell>
@@ -306,7 +274,8 @@ const Registration =(props)=> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {students.map((data, i) => {
+                        {loading && <em>Loading users...</em>}
+                            {data.map && data.map((data, i) => {
                              return (
                                 <TableRow key={i}>
                                     <TableCell style={stylesBody}>{data.id}</TableCell>

@@ -1,50 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useHistory } from 'react-router-dom'
-import { APPCONFIG} from './../../config/config'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, makeStyles
+    TableRow, TableBody, TableCell
   } from '@material-ui/core';
   import Paper from '@material-ui/core/Paper';
+  import { fetchUserDeposit } from '../../redux/users/userActions';
 import './index.scss'
 
 
 const DepositHistory =()=> {
-    //const history = useHistory();
-    const [deposit, setDeposit] = useState([])
-    const [userDeposit, setUserDeposit] = useState({})
+
+    const dispatch = useDispatch();
+    const data = useSelector(state=> state.user.users)
+    const user = useSelector(state=> state.user.user)
+    const loading = useSelector(state=> state.user.loading)
 
     useEffect(() => {
-        fetchDepositHistory()
+        dispatch(fetchUserDeposit(data.id))
     }, []);
-
-    const fetchDepositHistory =()=> {
-        let data = localStorage.getItem('userdata')
-
-        if (!data) {
-            
-        }
-        else{
-            data=JSON.parse(data);
-            //history.push('/admin')
-           
-        setUserDeposit(data);
-        }
-        axios.get(`${APPCONFIG.appapi}/userdeposit?id=${data.id}`)
-        .then((data)=> {
-            setDeposit(data.data)
-        })
-        .catch((error)=> {
-            console.log(error)
-        })
-    
-    }
-
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
 
       const stylesHead = {
         fontSize: '20px',
@@ -68,7 +42,7 @@ const DepositHistory =()=> {
             <h2>Deposit History</h2>
             <div>
                 <TableContainer component={Paper}>
-                <Table id="table-to-xls" className={useStyles.table}>
+                <Table id="table-to-xls">
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>
@@ -77,10 +51,11 @@ const DepositHistory =()=> {
                             <TableCell style={stylesHead}>Location </TableCell>
                             {/* <TableCell style={stylesHead}>Action </TableCell> */}
                         </TableRow>
+                        {loading && <em>Loading Your Deposit History...</em>}
                     </TableHead>
                     <TableBody>
                     
-                        {deposit.map((data, i)=> (
+                        {user.map && user.map((data, i)=> (
                             
                             <TableRow className="linkss" key={i}>
                                 <TableCell style={stylesBody}>{i + 1}</TableCell>

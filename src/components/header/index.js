@@ -1,50 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { useHistory} from 'react-router-dom'
 import './index.scss';
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 import Img from './../../taclogo.jpg'
+import { logoutUser } from '../../redux/users/userActions';
 
 const Header = props=> {
-    const history = useHistory()
-    let [userdata, setUserdata] = useState({});
-    let [homepage, setHomepage] = useState({})
-    let [userdataid, setUserdataid] = useState(null);
+    const dispatch = useDispatch()
+    const data = useSelector(state=> state.user.users)
+    const history = useHistory();
 
-    useEffect(() => {
-        let data = localStorage.getItem('userdata')
-
-        if (!data) {
-           // history.push('/')
+    const home =()=> {
+        if (data.usertype=='admin') {
+            history.push('/admin')
+        } else {
+            history.push('/profile')
         }
-        else{
-            data=JSON.parse(data);
-            console.log(data)
-        setUserdataid(data.id||data.adminid);
-        }
-    },[])
-
-    useEffect(() => {
-        let data = localStorage.getItem('userdata')
-
-        if (!data) {
-           // history.push('/')
-        }
-        else{
-            data=JSON.parse(data);
-            console.log(data,'popop')
-      setUserdata(data);
-        }
-    },[]);
+    }
 
     const logout=()=>{
-        localStorage.clear();
-        setUserdata({});
-        history.push('/')
+        dispatch(logoutUser())
     }
 
-    const home=()=> {
-        let data = localStorage.getItem('userdata')
-    }
+    
     return(
         <header className="header">
             <div className="headAll">
@@ -57,15 +36,14 @@ const Header = props=> {
                 <div className="tac-head">
 
                     <ul>
-                        <li>
-                            <Link >
+                    {data? 
+                        <li style={{cursor: 'pointer'}} onClick={home}>
                                 Home
-                            </Link>
                        
                         </li>
-
+                    : null}
                        {
-                           userdataid? <li style={{cursor: 'pointer'}} onClick={logout}>
+                           data? <li style={{cursor: 'pointer'}} onClick={logout}>
                         
                            LogOut
                       

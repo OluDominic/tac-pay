@@ -4,30 +4,32 @@ import FormInput from '../forms/FornInput/formInput';
 import FormWrapper from '../formWrapper';
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, Paper, makeStyles
+    TableRow, TableBody, TableCell, Paper
   } from '@material-ui/core';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import {APPCONFIG} from './../../config/config'
 import './index.scss'
+import { getTransaction } from '../../redux/admin/adminActions';
  
 const MyTran =()=> {
  
-    const [trans, setTrans] = useState([]);
     const [tran, setTran] = useState('');
+    const user = useSelector(state=> state.admin.data)
+    const loading = useSelector(state=> state.admin.loading)
+    const dispatch = useDispatch();
+    
+
     const handleSubmit =(event)=> {
         event.preventDefault();
         reset();
+        if(tran) {
+            dispatch(getTransaction(tran))
+        }
     }
 
     const reset =()=> {
         setTran('')
     }
-    
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
 
       const stylesHead = {
         fontSize: '20px',
@@ -45,26 +47,6 @@ const MyTran =()=> {
         fontWeight: '400',
         padding: '4px 4px'
       };
-    //const {id} = useParams();
-    const fetchUserTrans = () => {
-        console.log(8999)
-    const headers = {
-            "Content-Type": "application/json",
-            Authorization: `Bearer lll`,
-            "Access-Control-Allow-Origin":"*"
-        }
-        console.log(tran);
-        axios.get(`${APPCONFIG.appapi}/usertranss/${tran}`, {
-            headers
-        }).then((data) => {
-           
-         setTrans(data.data);
-        }).catch((error) => {
-            console.log(error);
-        })
-
-
-    }
  
     return(
         <div>
@@ -82,16 +64,14 @@ const MyTran =()=> {
                         handleChange={e => setTran(e.target.value) }
                         />
  
-                        <Button onClick={fetchUserTrans} type="submit">
+                        <Button type="submit">
                             Get Transaction
                         </Button>
                     </FormWrapper>
                 </form>
-                <h1>
-                   {trans.money}
-                </h1>
+
                 <TableContainer component={Paper}>
-                    <Table className={useStyles.table}>
+                    <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell style={stylesHead}>ID</TableCell>
@@ -103,7 +83,8 @@ const MyTran =()=> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {trans.map((data, i) => {
+                        {loading && <em>Loading User Transactions History...</em>}
+                            {user.map && user.map((data, i) => {
                              return (
                                 <TableRow key={i}>
                                     <TableCell style={stylesBody}>{data.id}</TableCell>

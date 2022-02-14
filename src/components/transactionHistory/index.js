@@ -1,30 +1,31 @@
 import React, {useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import axios from 'axios';
 import { Helmet } from 'react-helmet'
 import './index.scss'
-import { APPCONFIG } from './../../config/config'
 import moment from 'moment';
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, Paper, makeStyles
+    TableRow, TableBody, TableCell, Paper
   } from '@material-ui/core';
 import JwPagination from 'jw-react-pagination';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import FormInput from '../forms/FornInput/formInput';
-//import CheckBal from '../../pages/checkBalance/checkBalance'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllTransHis } from '../../redux/admin/adminActions';
 
 const TransHistory =(props)=> {
 
     const [userTrans, setUserTrans] = useState([])
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
+    const user = useSelector(state=> state.admin.data)
+    const loading = useSelector(state=> state.admin.loading)
+    const dispatch = useDispatch()
     
     useEffect(() => {
        
-         fetchTrasactionsHistory()  
+         dispatch(fetchAllTransHis())
           
-      },[setUserTrans]);
+      },[]);
 
       const fetchANew = (add)=>{
         let newpage = add?page+1:page-1;
@@ -50,11 +51,6 @@ const TransHistory =(props)=> {
           setUserTrans(results);
       }
 
-      const useStyles = makeStyles({
-        table: {
-        },
-      });
-
       const stylesHead = {
         fontSize: '20px',
         cursor: 'pointer',
@@ -71,26 +67,6 @@ const TransHistory =(props)=> {
         fontWeight: '400',
         padding: '4px 4px'
       };
-      
-
-    const fetchTrasactionsHistory =()=> {
-        console.log('Transaction fetched!')
-        const headers = {
-                "Content-Type": "application/json",
-                Authorization: `Bearer lll`,
-                "Access-Control-Allow-Origin":"*"
-            }
-    console.log(page,'here')
-            axios.get(`${APPCONFIG.appapi}/usertransactions?page=1`, {
-                headers
-            }).then((data) => {
-               
-                setUserTrans(data.data);
-            }).catch((error) => {
-                console.log(error);
-            })
-    
-    }
 
     return(
         <div>
@@ -117,7 +93,7 @@ const TransHistory =(props)=> {
                     </div>
                 <div>
                 <TableContainer component={Paper}>
-                    <Table className={useStyles.table}>
+                    <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell style={stylesHead}>Transaction ID</TableCell>
@@ -127,9 +103,10 @@ const TransHistory =(props)=> {
                                 <TableCell style={stylesHead}>Date</TableCell>
                                 <TableCell style={stylesHead}>Location</TableCell>
                             </TableRow>
+                        {loading && <em>Loading Transaction History...</em>}
                         </TableHead>
                         <TableBody>
-                            {userTrans.map((data, i) => {
+                            {user.map && user.map((data, i) => {
                              return (
                                 <TableRow key={i}>
                                     <TableCell style={stylesBody}>{data.transactionid}</TableCell>

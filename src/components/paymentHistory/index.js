@@ -1,43 +1,28 @@
 import React, { useState, useEffect} from 'react'
 import './index.scss'
-import axios from 'axios';
 import { Helmet } from 'react-helmet'
-import  {APPCONFIG} from '../../config/config';
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, Paper, makeStyles
+    TableRow, TableBody, TableCell, Paper
   } from '@material-ui/core';
 import moment from 'moment';
-import JwPagination from 'jw-react-pagination';
+import { useDispatch, useSelector } from 'react-redux';
 import FormInput from './../forms/FornInput/formInput';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { fetchAllPayHis } from '../../redux/admin/adminActions';
 
 const PaymentHistory =()=> {
 
     const [trans, setTrans ] = useState([]);
     const [search, setSearch] = useState("");
+    
+    const user = useSelector(state=> state.admin.data)
+    const loading = useSelector(state=> state.admin.loading)
+    const dispatch = useDispatch()
 
-   
-    // useEffect(()=> {
-    //     getCharacter()
-    //     if (search && search.length > 1) {
-    //         if (search.length % 2 === 0) {
-    //             getCharacter()
-    //         }
-    //     }
-    // },[search]);
-
-    // const getCharacter=()=> {
-    //     const results = trans.filter(trans => 
-    //         trans.id.toLowerCase().includes(search.toLowerCase()) ||
-    //         trans.date.toLowerCase().includes(search.toLowerCase()));
-    //         setTrans(results)
-    // }
-
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    useEffect(()=> {
+        dispatch(fetchAllPayHis())
+    },[])
 
       const stylesHead = {
         fontSize: '20px',
@@ -76,29 +61,6 @@ const PaymentHistory =()=> {
           setTrans(results);
       }
 
-    useEffect(() => {
-        console.log("Behavior when the value of 'foo' changes.");
-       fetchPaymentHistory()
-      },[setTrans]);
-
-        const fetchPaymentHistory = () => {
-            console.log(8999)
-        const headers = {
-                "Content-Type": "application/json",
-                Authorization: `Bearer lll`,
-                "Access-Control-Allow-Origin":"*"
-            }
-    console.log('here')
-            axios.get(`${APPCONFIG.appapi}/fetchtransactions?page=1`, {
-                headers
-            }).then((data) => {
-               
-             setTrans(data.data);
-            }).catch((error) => {
-                console.log(error);
-            })
-        }
-
     return (
         <div>
             <Helmet>
@@ -126,7 +88,7 @@ const PaymentHistory =()=> {
             <div>
                
             <TableContainer component={Paper}>
-                    <Table className={useStyles.table}>
+                    <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell style={stylesHead}>ID</TableCell>
@@ -136,7 +98,8 @@ const PaymentHistory =()=> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {trans.map((data, i) => {
+                        {loading && <em>Loading Payment History...</em>}
+                            {user.map && user.map((data, i) => {
                              return (
                                 <TableRow key={i}>
                                     <TableCell style={stylesBody}>{data.id}</TableCell>

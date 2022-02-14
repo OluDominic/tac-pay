@@ -1,23 +1,13 @@
-import React, { useState ,useEffect} from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import './index.scss'
 import {Helmet} from 'react-helmet'
 import Avatar from './../../avatar.png'
 
-const Profile =(props)=> {
-    let [userdata,setUserdata] = useState({});
-
-    useEffect(() => {
-        let data = localStorage.getItem('userdata')
-
-        if (!data) {
-           // history.push('/')
-        }
-        else{
-            data=JSON.parse(data);
-            console.log(data,'popop')
-      setUserdata(data);
-        }
-    },[]);
+const Profile =()=> {
+    
+    const users = useSelector(state => state.user.users);
+        
 
     return (
         <div className="profile">
@@ -35,10 +25,10 @@ const Profile =(props)=> {
                 </li>
                 <li>
                     <span className="displayName">
-                        Welcome {userdata.usertype=='admin'?'Admin':userdata.fname}
+                        Welcome {users.usertype=='admin'?'admin':users.fname}
                     </span>
                     <h3 className="studentID">User ID: 
-                        {userdata.usertype=='admin'?'admin':userdata.id}
+                        {users.usertype=='admin'?'admin':users.id}
                     </h3>
                 </li>
             </ul>

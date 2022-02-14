@@ -3,25 +3,29 @@ import axios from 'axios';
 import { APPCONFIG } from './../../config/config';
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, Paper, makeStyles
+    TableRow, TableBody, TableCell, Paper
   } from '@material-ui/core';
 import './index.scss';
 import FormWrapper from '../formWrapper';
 import FormInput from '../forms/FornInput/formInput';
 import Button from '../forms/Buttons';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserDepHis } from '../../redux/admin/adminActions';
 
 const AdminDeposit =()=> {
     const [deposit, setDeposit] = useState('');
-    const [deposite, setDeposite] = useState([]);
 
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    const dispatch = useDispatch()
+    const data = useSelector(state=> state.admin.data)
+    const loading = useSelector(state=> state.admin.loading)
 
     const handleSubmit =(e)=> {
         e.preventDefault();
         reset();
+        if(deposit) {
+            dispatch(fetchUserDepHis(deposit))
+            loading && <em>Loading User Deposit History...</em>
+        }
     }
 
       const stylesHead = {
@@ -45,26 +49,6 @@ const AdminDeposit =()=> {
         padding: '4px 4px'
       };
 
-      const fetchUserTrans = () => {
-        console.log(8999)
-    const headers = {
-            "Content-Type": "application/json",
-            Authorization: `Bearer lll`,
-            "Access-Control-Allow-Origin":"*"
-        }
-        console.log(deposit);
-        axios.get(`${APPCONFIG.appapi}/usercredit/${deposit}`, {
-            headers
-        }).then((data) => {
-           
-            setDeposite(data.data);
-        }).catch((error) => {
-            console.log(error);
-        })
-
-
-    }
-
     return (
         <div>
             <h1>Deposit History</h1>
@@ -78,7 +62,7 @@ const AdminDeposit =()=> {
                         value={deposit}
                         handleChange={e => setDeposit(e.target.value)}
                         />
-                        <Button onClick={fetchUserTrans} type="submit" >
+                        <Button type="submit" >
                             Enter
                         </Button>
                     </FormWrapper>
@@ -86,7 +70,7 @@ const AdminDeposit =()=> {
             </div>
             <div>
                 <TableContainer component={Paper}>
-                    <Table className={useStyles.table}>
+                    <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell style={stylesHead}>ID</TableCell>
@@ -96,7 +80,7 @@ const AdminDeposit =()=> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {deposite.map((data, i) => {
+                            {data.map && data.map((data, i) => {
                              return (
                                 <TableRow key={i}>
                                     <TableCell style={stylesBody}>{data.id}</TableCell>

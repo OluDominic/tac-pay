@@ -22,6 +22,7 @@ import DeleteUserPage from './pages/DeleteUserPage';
 import UserTrans from './pages/userTrans';
 import AdminDepositHis from './pages/AdminDepositHis';
 import UpdateUserPage from './pages/updateUserPage';
+import UserDetailsPage from './pages/userDetailsPage';
 
 const App=(props)=> {
 
@@ -84,6 +85,11 @@ const App=(props)=> {
         <Route path="/usertransaction" render={()=> (
           <AdminLay>
             <MyTranaction />
+          </AdminLay>
+        )} />
+        <Route path="/userdetails" render={()=> (
+          <AdminLay>
+            <UserDetailsPage />
           </AdminLay>
         )} />
 

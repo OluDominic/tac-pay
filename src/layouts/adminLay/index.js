@@ -45,6 +45,11 @@ const AdminLay =(props)=> {
                                     Students
                                 </Link>
                             </li>
+                            {/* <li>
+                                <Link to="/userdetails">
+                                    User Details
+                                </Link>
+                            </li> */}
                             <li>
                                 <Link to="/delete">
                                     Delete User
