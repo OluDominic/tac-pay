@@ -7,9 +7,9 @@ import Home from '../../components/Home';
 const HomeLay =()=> {
     return (
         <div>
-            <Header className="tacHome"/>
+            {/* <Header className="tacHome"/> */}
                 <Home />
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 }

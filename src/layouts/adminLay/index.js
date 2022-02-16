@@ -8,7 +8,7 @@ const AdminLay =(props)=> {
     
 
     return (
-        <div className="tacAdminLay">
+        <div style={{background: "white"}} className="tacAdminLay">
             <Header {...props} />
             <div className="tacControl">
                 <div className="controlLay">

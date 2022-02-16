@@ -1,9 +1,10 @@
 import React from 'react';
-import LoginForm from '../../pages/LoginForm';
-import LoginBackground from './../../loginwallpaper.jpg'
+import LoginBackground from './../../Poketmoni.jpg'
 import {Helmet} from 'react-helmet'
 import Logo from './../../taclogo.jpg'
+
 import './index.scss';
+import Header from '../header';
 
 const Home =(props)=> {
 
@@ -18,12 +19,23 @@ const Home =(props)=> {
                         <title>TAS Smart Card System</title>
                         <meta name="viewport" content="width=device-width, initial-scale=1" />
                         <link rel="icon" href={Logo} />
-                    </Helmet> 
-                    <h1>
-                    The Ambassadors Schools Smart Card System
-                    </h1>
-                    <h2>Portal Login</h2>
-                    <LoginForm />
+                    </Helmet>
+                    <div>
+                        <Header />
+                    </div>
+                    <div className="home-message">
+                        <h1>
+                        Helping to solve
+                        </h1>
+                        <h1>
+                        Finantial technology
+                        </h1>
+                        <h1>
+                        in the education world.
+                        </h1>
+                        <h3>Spend, save and document your</h3>
+                        <h3>children's account while in school.</h3>
+                    </div>
                 </div>
                 
             </div>

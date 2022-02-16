@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory} from 'react-router-dom'
+import { NavLink, useHistory} from 'react-router-dom'
 import './index.scss';
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +19,10 @@ const Header = props=> {
         }
     }
 
+    const login =()=> {
+        history.push('/login')
+    }
+
     const logout=()=>{
         dispatch(logoutUser())
     }
@@ -28,9 +32,50 @@ const Header = props=> {
         <header className="header">
             <div className="headAll">
                 <div className="logo">
-                    <Link >
+                    {/* <Link >
                         <img src={Img} alt="img"/>
-                    </Link>
+                    </Link> */}
+                    <ul>
+                        {!data?
+                        <li>
+                            <Link to="/">
+                                Poketmoni
+                            </Link>
+                        </li>
+                        :null}
+                    </ul>
+                </div>
+                <div className="hyperlinks">
+                    <ul>
+                        {!data?
+                        <li>
+                            <Link>
+                                About
+                            </Link>
+                        </li>:null
+                        }
+                        {!data?
+                        <li>
+                            <Link>
+                                Contact
+                            </Link>
+                        </li>:null
+                        }
+                        {!data?
+                        <li>
+                            <Link>
+                                Plans
+                            </Link>
+                        </li>:null
+                        }
+                        {!data?
+                        <li>
+                            <Link>
+                                Payment
+                            </Link>
+                        </li>:null
+                        }
+                    </ul>
                 </div>
 
                 <div className="tac-head">
@@ -41,13 +86,13 @@ const Header = props=> {
                                 Home
                        
                         </li>
-                    : null}
+                    : <button onClick={login} className="signin">Sign in </button> }
                        {
                            data? <li style={{cursor: 'pointer'}} onClick={logout}>
                         
                            LogOut
                       
-                   </li>:null
+                   </li>:<button className="signup">Sign Up</button>
                        }
                     </ul>
 

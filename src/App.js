@@ -61,17 +61,12 @@ const App=(props)=> {
             <UpdateUserPage />
           </AdminLay>
         )}/>
-      {
-        /**
-         * 
-         *   <Route path="/login" render={()=> (
+        <Route path="/login" render={()=> (
           <MainLay>
             <LoginForm />
           </MainLay>
         )}  />
-        
-         */
-      }
+      
         <Route path="/register" render={()=> (
           <AdminLay>
             <RegistrationForm />

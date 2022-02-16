@@ -27,7 +27,7 @@ const Profile =()=> {
                     <span className="displayName">
                         Welcome {users.usertype=='admin'?'admin':users.fname}
                     </span>
-                    <h3 className="studentID">User ID: 
+                    <h3 style={{textAlign: 'center'}} className="studentID">User ID: 
                         {users.usertype=='admin'?'admin':users.id}
                     </h3>
                 </li>
