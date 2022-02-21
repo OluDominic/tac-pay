@@ -9,7 +9,7 @@ const HomeLay =()=> {
         <div>
             {/* <Header className="tacHome"/> */}
                 <Home />
-            {/* <Footer /> */}
+            <Footer />
         </div>
     );
 }

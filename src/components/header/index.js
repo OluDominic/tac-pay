@@ -46,6 +46,7 @@ const Header = props=> {
                     </ul>
                 </div>
                 <div className="hyperlinks">
+                    <nav>
                     <ul>
                         {!data?
                         <li>
@@ -76,26 +77,27 @@ const Header = props=> {
                         </li>:null
                         }
                     </ul>
+                    
+                    </nav>
                 </div>
 
                 <div className="tac-head">
 
                     <ul>
                     {data? 
-                        <li style={{cursor: 'pointer'}} onClick={home}>
+                        <li style={{cursor: 'pointer', color: 'black'}} onClick={home}>
                                 Home
                        
                         </li>
                     : <button onClick={login} className="signin">Sign in </button> }
                        {
-                           data? <li style={{cursor: 'pointer'}} onClick={logout}>
+                           data? <li style={{cursor: 'pointer', color: 'black'}} onClick={logout}>
                         
                            LogOut
                       
                    </li>:<button className="signup">Sign Up</button>
                        }
                     </ul>
-
                 </div>
             </div>
         </header>

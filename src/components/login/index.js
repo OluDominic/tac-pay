@@ -28,8 +28,8 @@ const Login =()=> {
 
     return (
 
-        <div className="formWrap">
-            
+        <div style={{height: '70vh'}} className="formWrap">
+    
             <FormWrapper {...configWrap}>
                 <form onSubmit={handleSubmitForm}>
                     <h3 style={{color: 'red'}}>{loginMessage}</h3>

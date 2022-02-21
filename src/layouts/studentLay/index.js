@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 const StudentLay =(props)=> {
 
     return (
-        <div style={{background: "white"}} className="tacStuLay">
+        <div className="tacStuLay">
             <Header {...props}/>
             <div className="tacControl">
                 <div className="controlLay">
